@@ -1,12 +1,11 @@
 import express from "express";
 import Category from "../models/Category.js";
 import Place from "../models/Place.js";
-import { protect, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
 
-// Get active categories
+// get active categories
 router.get("/", async (req, res) => {
     try {
         const categories = await Category.find({
