@@ -88,6 +88,39 @@ router.post("/", async (req, res) => {
         });
     }
 });
+// Remove a favorite
+router.delete("/:placeId", async (req, res) => {
+    try {
+        const { placeId } = req.params;
+
+        if (!mongoose.isValidObjectId(placeId)) {
+            return res.status(400).json({
+                message: "Invalid place ID"
+            });
+        }
+
+        const favorite = await Favorite.findOneAndDelete({
+            user: req.user._id,
+            place: placeId
+        });
+
+        if (!favorite) {
+            return res.status(404).json({
+                message: "Favorite not found"
+            });
+        }
+
+        res.json({
+            message: "Removed from favorites"
+        });
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
 
 
 export default router;
