@@ -1,7 +1,8 @@
 import express from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -127,6 +128,12 @@ router.post("/login", async (req, res) => {
         });
     }
 });
+
+//Get logged-in user's profile
+router.get("/profile", protect, (req, res) => {
+    res.status(200).json({ user: req.user });
+});
+
 
 
 export default router;
