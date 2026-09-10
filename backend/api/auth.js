@@ -1,7 +1,8 @@
 import express from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -128,5 +129,28 @@ router.post("/login", async (req, res) => {
     }
 });
 
+//Get logged-in user's profile
+router.get("/profile", protect, (req, res) => {
+    res.status(200).json({ user: req.user });
+});
+
+//Update logged-in user's profile
+router.put("/profile", protect, async (req, res) => {
+    try {
+        const { name, profileImage } = req.body;
+        if (name) { req.user.name = name; }
+        if (profileImage !== undefined) { req.user.profileImage = profileImage; }
+        await req.user.save();
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: req.user
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
 
 export default router;
