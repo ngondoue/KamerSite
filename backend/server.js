@@ -20,8 +20,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 connectDB();
 
-app.use("/api/auth", authRoutes);
-
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
