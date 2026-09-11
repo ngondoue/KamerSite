@@ -35,7 +35,6 @@ router.get("/", async (req, res) => {
 });
 
 // add a favorite
-
 router.post("/", async (req, res) => {
     try {
         const { placeId } = req.body;
