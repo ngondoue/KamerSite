@@ -161,5 +161,106 @@ router.get("/:id/nearby", async (req, res) => {
     }
 });
 
+// add a place
+router.post("/", protect, requireAdmin, async (req, res) => {
+    try {
+        const place = await Place.create(req.body);
+
+        res.status(201).json(place);
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+});
+
+
+ // update a place
+router.put("/:id", protect, requireAdmin, async (req, res) => {
+    try {
+        const place = await Place.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+
+        if (!place) {
+            return res.status(404).json({
+                message: "Place not found"
+            });
+        }
+
+
+        res.json(place);
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+});
+
+
+// delete a place
+router.delete("/:id", protect, requireAdmin, async (req, res) => {
+    try {
+        const place = await Place.findByIdAndDelete(req.params.id);
+
+        if (!place) {
+            return res.status(404).json({
+                message: "Place not found"
+            });
+        }
+
+
+        res.json({
+            message: "Place deleted successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
+
+// calculate distance between two locations
+
+function getDistance(point1, point2) {
+    const R = 6371;
+
+    const lat1 = point1.lat * Math.PI / 180;
+    const lat2 = point2.lat * Math.PI / 180;
+
+    const latDifference =
+        (point2.lat - point1.lat) * Math.PI / 180;
+
+    const lngDifference =
+        (point2.lng - point1.lng) * Math.PI / 180;
+
+
+    const a =
+        Math.sin(latDifference / 2) *
+        Math.sin(latDifference / 2) +
+        Math.cos(lat1) *
+        Math.cos(lat2) *
+        Math.sin(lngDifference / 2) *
+        Math.sin(lngDifference / 2);
+
+
+    const c = 2 * Math.atan2(
+        Math.sqrt(a),
+        Math.sqrt(1 - a)
+    );
+
+
+    return R * c;
+}
 
 export default router;
