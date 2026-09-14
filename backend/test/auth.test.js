@@ -40,5 +40,15 @@ describe('Auth (api/auth.js)', () => {
     expect(res.status).toBe(200);
     expect(res.body.token).toBeDefined();
   });
-  
+  //invalid login test
+  test('login fails with invalid credentials', async () => {
+    await request(BASE_URL)
+    .post('/api/auth/register')
+    .send(validUser);
+    const res = await request(BASE_URL)
+    .post('/api/auth/login')
+    .send({ email: validUser.email, password: 'wrongpassword' });
+    
+    expect(res.status).toBe(401);
+  });
 });
