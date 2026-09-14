@@ -30,5 +30,19 @@ describe('Reviews (api/reviews.js)', () => {
     const stored = await Review.findOne({ place: place._id });
     expect(stored.status).toBe('pending');
   });
+
+  test('a pending review does not show publicly or affect the rating', async () => {
+    await request(BASE_URL)
+      .post('/api/reviews')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ place: place._id, rating: 5 });
+
+    const reviews = await request(BASE_URL).get(`/api/reviews/place/${place._id}`);
+    expect(reviews.body).toHaveLength(0);
+
+    const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
+    expect(placeRes.body.rating).toBe(0);
+  });
+  
  });
- 
+
