@@ -104,5 +104,22 @@ describe('Reviews (api/reviews.js)', () => {
       .send({ place: place._id, rating: 5 });
     expect(res.status).toBe(401);
   });
+  test('the review owner can delete their own review, and the rating recalculates', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 5 });
+    const review = await Review.findOne({ place: place._id });
+
+    await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'approved' });
+
+    const deleteRes = await request(BASE_URL)
+      .delete(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${userToken}`);
+    expect(deleteRes.status).toBe(200);
+
+    const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
+    expect(placeRes.body.rating).toBe(0);
+  });
  });
 
