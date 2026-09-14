@@ -86,6 +86,10 @@ describe('Reviews (api/reviews.js)', () => {
     const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
     expect(placeRes.body.rating).toBe(0);
   });
-  
+  test('a user can only review a place once', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 5 });
+    const res = await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 3 });
+    expect(res.status).toBe(409);
+  });
  });
 
