@@ -121,5 +121,17 @@ describe('Reviews (api/reviews.js)', () => {
     const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
     expect(placeRes.body.rating).toBe(0);
   });
- });
+  test('an admin can delete another user\'s review', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 5 });
+    const review = await Review.findOne({ place: place._id });
+
+    const res = await request(BASE_URL)
+      .delete(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(res.status).toBe(200);
+    expect(await Review.findById(review._id)).toBeNull();
+  });
+});
+ 
 
