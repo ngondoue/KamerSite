@@ -3,6 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./api/auth.js";
 import categoryRoutes from "./api/categories.js";
+import placesRoutes from "./api/places.js"
+import favoriteRoutes from "./api/favorites.js";
+import reviewRoutes from "./api/reviews.js";
+import adminRoutes from "./api/admin.js";
 import connectDB from "./config/db.js";
 
 
@@ -18,6 +22,10 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/places", placesRoutes)
+app.use("/api/favorites", favoriteRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/admin", adminRoutes);
 connectDB();
 
 
