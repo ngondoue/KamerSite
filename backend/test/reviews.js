@@ -63,6 +63,75 @@ describe('Reviews (api/reviews.js)', () => {
     const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
     expect(placeRes.body.rating).toBe(4);
   });
-  
- });
+   test('a regular user cannot moderate a review (PUT requires admin)', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 3 });
+    const review = await Review.findOne({ place: place._id });
+
+    const res = await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ status: 'approved' });
+
+    expect(res.status).toBe(403);
+  });
+  test('a rejected review does not count toward the rating', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 1 });
+    const review = await Review.findOne({ place: place._id });
+
+    await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'rejected' });
+
+    const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
+    expect(placeRes.body.rating).toBe(0);
+  });
+  test('a user can only review a place once', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 5 });
+    const res = await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 3 });
+    expect(res.status).toBe(409);
+  });
+  test('rejects an invalid rating', async () => {
+    const res = await request(BASE_URL)
+      .post('/api/reviews')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ place: place._id, rating: 10 });
+    expect(res.status).toBe(400);
+  });
+  test('submitting a review requires authentication', async () => {
+    const res = await request(BASE_URL)
+      .post('/api/reviews')
+      .send({ place: place._id, rating: 5 });
+    expect(res.status).toBe(401);
+  });
+  test('the review owner can delete their own review, and the rating recalculates', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 5 });
+    const review = await Review.findOne({ place: place._id });
+
+    await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'approved' });
+
+    const deleteRes = await request(BASE_URL)
+      .delete(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${userToken}`);
+    expect(deleteRes.status).toBe(200);
+
+    const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
+    expect(placeRes.body.rating).toBe(0);
+  });
+  test('an admin can delete another user\'s review', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 5 });
+    const review = await Review.findOne({ place: place._id });
+
+    const res = await request(BASE_URL)
+      .delete(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(res.status).toBe(200);
+    expect(await Review.findById(review._id)).toBeNull();
+  });
+});
+ 
 
