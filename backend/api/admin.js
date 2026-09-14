@@ -47,6 +47,51 @@ router.get("/dashboard", async (req, res) => {
     }
 });
 
+// get all places for Admin
+router.get("/places", async (req, res) => {
+    try {
+        const filter = {};
+
+        if (req.query.status) {
+            filter.status = req.query.status;
+        }
+
+        const places = await Place.find(filter)
+            .populate("category", "name slug")
+            .sort({ createdAt: -1 });
+
+        res.json(places);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
+// get one place for admin
+router.get("/places/:id", async (req, res) => {
+    try {
+        const place = await Place.findById(req.params.id)
+            .populate("category", "name slug icon");
+
+        if (!place) {
+            return res.status(404).json({
+                message: "Place not found"
+            });
+        }
+
+        res.json(place);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
 
 
 export default router;
