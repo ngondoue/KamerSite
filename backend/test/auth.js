@@ -13,6 +13,12 @@ describe('Auth (api/auth.js)', () => {
     expect(res.body.user.email).toBe(validUser.email);
     expect(res.body.user.password).toBeUndefined();
   });
+    // password hashing test
+    test('register hashes the password', async () => {
+    await request(BASE_URL).post('/api/auth/register').send(validUser);
+    const stored = await User.findOne({ email: validUser.email }).select('+password');
+    expect(stored.password).not.toBe(validUser.password);
+  });
 
   
 });
