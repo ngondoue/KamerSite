@@ -43,6 +43,26 @@ describe('Reviews (api/reviews.js)', () => {
     const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
     expect(placeRes.body.rating).toBe(0);
   });
+  test('an admin approving a review (PUT) makes it public and updates the rating', async () => {
+    await request(BASE_URL)
+      .post('/api/reviews')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ place: place._id, rating: 4 });
+
+    const review = await Review.findOne({ place: place._id });
+
+    const putRes = await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'approved' });
+    expect(putRes.status).toBe(200);
+
+    const reviews = await request(BASE_URL).get(`/api/reviews/place/${place._id}`);
+    expect(reviews.body).toHaveLength(1);
+
+    const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
+    expect(placeRes.body.rating).toBe(4);
+  });
   
  });
 
