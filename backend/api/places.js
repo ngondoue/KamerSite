@@ -1,6 +1,7 @@
 import express from "express";
 import Place from "../models/Place.js";
 import Category from "../models/Category.js";
+import { protect, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
