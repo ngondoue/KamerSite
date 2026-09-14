@@ -91,5 +91,12 @@ describe('Reviews (api/reviews.js)', () => {
     const res = await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 3 });
     expect(res.status).toBe(409);
   });
+  test('rejects an invalid rating', async () => {
+    const res = await request(BASE_URL)
+      .post('/api/reviews')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ place: place._id, rating: 10 });
+    expect(res.status).toBe(400);
+  });
  });
 
