@@ -19,6 +19,11 @@ describe('Auth (api/auth.js)', () => {
     const stored = await User.findOne({ email: validUser.email }).select('+password');
     expect(stored.password).not.toBe(validUser.password);
   });
-
+   //Duplicate email test
+  test('register rejects a duplicate email', async () => {
+    await request(BASE_URL).post('/api/auth/register').send(validUser);
+    const res = await request(BASE_URL).post('/api/auth/register').send(validUser);
+    expect(res.status).toBe(409);
+  });
   
 });
