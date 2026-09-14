@@ -30,7 +30,7 @@ describe('Auth (api/auth.js)', () => {
     const res = await request(BASE_URL).post('/api/auth/register').send({ ...validUser, password: 'short' });
     expect(res.status).toBe(400);
   });
-  //login test
+//login test
   test('login succeeds with valid credentials', async () => {
     await request(BASE_URL).post('/api/auth/register').send(validUser);
     const res = await request(BASE_URL)
@@ -40,4 +40,5 @@ describe('Auth (api/auth.js)', () => {
     expect(res.status).toBe(200);
     expect(res.body.token).toBeDefined();
   });
+  
 });
