@@ -120,4 +120,6 @@ test('submitting a review requires authentication', async () => {
     const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
     expect(placeRes.body.rating).toBe(0);
   });
+  
+
 });
