@@ -92,6 +92,28 @@ router.get("/places/:id", async (req, res) => {
     }
 });
 
+// Get all categories for admin
+router.get("/categories", async (req, res) => {
+    try {
+        const categories = await Category.find()
+            .sort({ name: 1 });
+
+   // Get all categories for admin
+router.get("/categories", async (req, res) => {
+    try {
+        const categories = await Category.find()
+            .sort({ name: 1 });
+
+        res.json(categories);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
 
 
 export default router;
