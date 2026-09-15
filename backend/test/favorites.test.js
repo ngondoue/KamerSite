@@ -20,3 +20,13 @@ describe('Favorites (api/favorites.js)', () => {
     expect(res.status).toBe(401);
   });
 
+  test('can add and list a favorite', async () => {
+    const addRes = await request(BASE_URL)
+      .post('/api/favorites')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ placeId: place._id });
+    expect(addRes.status).toBe(201);
+
+    const res = await request(BASE_URL).get('/api/favorites').set('Authorization', `Bearer ${token}`);
+    expect(res.body).toHaveLength(1);
+  });
