@@ -20,3 +20,13 @@ describe('Reviews (api/reviews.js)', () => {
     const category = await Category.create({ name: 'Restaurants' });
     place = await Place.create({ name: 'Reviewed Place', description: 'x', category: category._id, location: 'x', status: 'published' });
   });
+test('a new review defaults to "pending"', async () => {
+    await request(BASE_URL)
+      .post('/api/reviews')
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ place: place._id, rating: 5, comment: 'Great!' });
+
+    const stored = await Review.findOne({ place: place._id });
+    expect(stored.status).toBe('pending');
+  });
+});
