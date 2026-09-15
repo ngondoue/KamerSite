@@ -62,5 +62,16 @@ test('a new review defaults to "pending"', async () => {
     const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
     expect(placeRes.body.rating).toBe(4);
   });
+  test('a regular user cannot moderate a review (PUT requires admin)', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 3 });
+    const review = await Review.findOne({ place: place._id });
+
+    const res = await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${userToken}`)
+      .send({ status: 'approved' });
+
+    expect(res.status).toBe(403);
+  });
   
 });
