@@ -35,4 +35,16 @@ describe('Favorites (api/favorites.js)', () => {
     await request(BASE_URL).post('/api/favorites').set('Authorization', `Bearer ${token}`).send({ placeId: place._id });
     const res = await request(BASE_URL).post('/api/favorites').set('Authorization', `Bearer ${token}`).send({ placeId: place._id });
     expect(res.status).toBe(409);
+  });test('can remove a favorite', async () => {
+    await request(BASE_URL).post('/api/favorites').set('Authorization', `Bearer ${token}`).send({ placeId: place._id });
+
+    const removeRes = await request(BASE_URL)
+      .delete(`/api/favorites/${place._id}`)
+      .set('Authorization', `Bearer ${token}`);
+    expect(removeRes.status).toBe(200);
+
+    const res = await request(BASE_URL).get('/api/favorites').set('Authorization', `Bearer ${token}`);
+    expect(res.body).toHaveLength(0);
   });
+
+});
