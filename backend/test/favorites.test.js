@@ -15,3 +15,8 @@ describe('Favorites (api/favorites.js)', () => {
     const category = await Category.create({ name: 'Parks' });
     place = await Place.create({ name: 'Test Park', description: 'x', category: category._id, location: 'x', status: 'published' });
   });
+  test('requires authentication', async () => {
+    const res = await request(BASE_URL).get('/api/favorites');
+    expect(res.status).toBe(401);
+  });
+
