@@ -67,5 +67,17 @@ describe('Auth (api/auth.js)', () => {
     expect(res.body.user.email).toBe(validUser.email);
     expect(res.body.user.password).toBeUndefined();
   });
+  
+  //profile update test
+  test('PUT /profile updates the user\'s name', async () => {
+    const registerRes = await request(BASE_URL).post('/api/auth/register').send(validUser);
+    const res = await request(BASE_URL)
+      .put('/api/auth/profile')
+      .set('Authorization', `Bearer ${registerRes.body.token}`)
+      .send({ name: 'Updated Name' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.name).toBe('Updated Name');
+  });
 
 });
