@@ -97,5 +97,11 @@ test('rejects an invalid rating', async () => {
       .send({ place: place._id, rating: 10 });
     expect(res.status).toBe(400);
   });
-
+test('submitting a review requires authentication', async () => {
+    const res = await request(BASE_URL)
+      .post('/api/reviews')
+      .send({ place: place._id, rating: 5 });
+    expect(res.status).toBe(401);
+  });
+  
 });
