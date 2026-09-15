@@ -92,6 +92,62 @@ router.get("/places/:id", async (req, res) => {
     }
 });
 
+   // get all categories for admin
+router.get("/categories", async (req, res) => {
+    try {
+        const categories = await Category.find()
+            .sort({ name: 1 });
+
+        res.json(categories);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
+// get all reviews for admin
+router.get("/reviews", async (req, res) => {
+    try {
+        const filter = {};
+
+        if (req.query.status) {
+            filter.status = req.query.status;
+        }
+
+        const reviews = await Review.find(filter)
+            .populate("user", "name email")
+            .populate("place", "name slug")
+            .sort({ createdAt: -1 });
+
+        res.json(reviews);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+// get all users 
+router.get("/users", async (req, res) => {
+    try {
+        const users = await User.find()
+            .sort({ createdAt: -1 });
+
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
+
 
 
 export default router;
