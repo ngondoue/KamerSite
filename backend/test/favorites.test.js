@@ -30,3 +30,5 @@ describe('Favorites (api/favorites.js)', () => {
     const res = await request(BASE_URL).get('/api/favorites').set('Authorization', `Bearer ${token}`);
     expect(res.body).toHaveLength(1);
   });
+
+  
