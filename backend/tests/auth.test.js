@@ -51,4 +51,33 @@ describe('Auth (api/auth.js)', () => {
     
     expect(res.status).toBe(401);
   });
+  //profile retrieval tests
+  test('GET /profile requires a token', async () => {
+    const res = await request(BASE_URL).get('/api/auth/profile');
+    expect(res.status).toBe(401);
+  });
+
+  test('GET /profile returns the logged-in user', async () => {
+    const registerRes = await request(BASE_URL).post('/api/auth/register').send(validUser);
+    const res = await request(BASE_URL)
+      .get('/api/auth/profile')
+      .set('Authorization', `Bearer ${registerRes.body.token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.email).toBe(validUser.email);
+    expect(res.body.user.password).toBeUndefined();
+  });
+  
+  //profile update test
+  test('PUT /profile updates the user\'s name', async () => {
+    const registerRes = await request(BASE_URL).post('/api/auth/register').send(validUser);
+    const res = await request(BASE_URL)
+      .put('/api/auth/profile')
+      .set('Authorization', `Bearer ${registerRes.body.token}`)
+      .send({ name: 'Updated Name' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.name).toBe('Updated Name');
+  });
+
 });
