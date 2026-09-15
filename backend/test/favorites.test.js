@@ -31,4 +31,8 @@ describe('Favorites (api/favorites.js)', () => {
     expect(res.body).toHaveLength(1);
   });
 
-  
+  test('prevents duplicate favorites for the same place', async () => {
+    await request(BASE_URL).post('/api/favorites').set('Authorization', `Bearer ${token}`).send({ placeId: place._id });
+    const res = await request(BASE_URL).post('/api/favorites').set('Authorization', `Bearer ${token}`).send({ placeId: place._id });
+    expect(res.status).toBe(409);
+  });
