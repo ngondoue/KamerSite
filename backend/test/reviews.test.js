@@ -73,5 +73,17 @@ test('a new review defaults to "pending"', async () => {
 
     expect(res.status).toBe(403);
   });
-  
+  test('a rejected review does not count toward the rating', async () => {
+    await request(BASE_URL).post('/api/reviews').set('Authorization', `Bearer ${userToken}`).send({ place: place._id, rating: 1 });
+    const review = await Review.findOne({ place: place._id });
+
+    await request(BASE_URL)
+      .put(`/api/reviews/${review._id}`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'rejected' });
+
+    const placeRes = await request(BASE_URL).get(`/api/places/${place._id}`);
+    expect(placeRes.body.rating).toBe(0);
+  });
+
 });
