@@ -25,5 +25,30 @@ describe('Auth (api/auth.js)', () => {
     const res = await request(BASE_URL).post('/api/auth/register').send(validUser);
     expect(res.status).toBe(409);
   });
-  
+  // Short password test
+  test('register rejects a short password', async () => {
+    const res = await request(BASE_URL).post('/api/auth/register').send({ ...validUser, password: 'short' });
+    expect(res.status).toBe(400);
+  });
+//login test
+  test('login succeeds with valid credentials', async () => {
+    await request(BASE_URL).post('/api/auth/register').send(validUser);
+    const res = await request(BASE_URL)
+    .post('/api/auth/login')
+    .send({ email: validUser.email, password: validUser.password });
+    
+    expect(res.status).toBe(200);
+    expect(res.body.token).toBeDefined();
+  });
+  //invalid login test
+  test('login fails with invalid credentials', async () => {
+    await request(BASE_URL)
+    .post('/api/auth/register')
+    .send(validUser);
+    const res = await request(BASE_URL)
+    .post('/api/auth/login')
+    .send({ email: validUser.email, password: 'wrongpassword' });
+    
+    expect(res.status).toBe(401);
+  });
 });

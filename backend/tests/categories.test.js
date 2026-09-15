@@ -33,4 +33,15 @@ describe('Categories (api/categories.js)', () => {
     expect(res.status).toBe(201);
     expect(res.body.name).toBe('Nature');
   });
+
+  test('DELETE /api/categories/:id succeeds when no places depend on it', async () => {
+    const token = await adminToken();
+    const category = await Category.create({ name: 'Unused Category' });
+
+    const res = await request(BASE_URL)
+      .delete(`/api/categories/${category._id}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+  });
 });
