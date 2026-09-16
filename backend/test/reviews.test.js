@@ -3,7 +3,7 @@ import { BASE_URL } from './setup.js';
 import User from '../models/User.js';
 import Category from '../models/Category.js';
 import Place from '../models/Place.js';
-import Review from '../models/Review.js';
+import Review from '../models/Reviews.js';
 
 describe('Reviews (api/reviews.js)', () => {
   let userToken, adminToken, place;
