@@ -147,6 +147,51 @@ router.get("/users", async (req, res) => {
     }
 });
 
+// Change a user's role
+router.patch("/users/:id/role", async (req, res) => {
+try {
+const { role } = req.body;
+
+if (role !== "user" && role !== "admin") {
+return res.status(400).json({
+message: "Invalid role"
+});
+}
+
+//  Prevent an admin from removing their own admin access
+if (
+req.params.id === req.user._id.toString() &&
+role === "user"
+) {
+return res.status(400).json({
+message: "You cannot remove your own admin access"
+});
+}
+
+const user = await User.findByIdAndUpdate(
+req.params.id,
+{ role },
+{ new: true, runValidators: true }
+);
+
+if (!user) {
+return res.status(404).json({
+message: "User not found"
+});
+}
+
+res.json({
+message: "User role updated successfully",
+user
+});
+} catch (error) {
+console.log(error);
+
+res.status(500).json({
+message: "Server error"
+});
+}
+});
 
 
 

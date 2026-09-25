@@ -34,6 +34,32 @@ describe('Categories (api/categories.js)', () => {
     expect(res.body.name).toBe('Nature');
   });
 
+  test('PUT /api/categories/:id updates a category (admin)', async () => {
+    const token = await adminToken();
+    const category = await Category.create({ name: 'Old Name' });
+
+    const res = await request(BASE_URL)
+      .put(`/api/categories/${category._id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: 'New Name' });
+
+    expect(res.status).toBe(200);
+    expect(res.body.name).toBe('New Name');
+  });
+
+  test('DELETE /api/categories/:id is blocked if places depend on it', async () => {
+    const token = await adminToken();
+    const category = await Category.create({ name: 'Restaurants' });
+    await Place.create({ name: 'Dependent Place', description: 'x', category: category._id, location: 'Yaoundé' });
+
+    const res = await request(BASE_URL)
+      .delete(`/api/categories/${category._id}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(409);
+    expect(await Category.findById(category._id)).not.toBeNull();
+  });
+
   test('DELETE /api/categories/:id succeeds when no places depend on it', async () => {
     const token = await adminToken();
     const category = await Category.create({ name: 'Unused Category' });
