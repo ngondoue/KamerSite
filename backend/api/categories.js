@@ -83,4 +83,126 @@ router.get("/:id/places", async (req, res) => {
     }
 });
 
+//  create a category
+router.post("/", protect, requireAdmin, async (req, res) => {
+    try {
+        const {
+            name,
+            description,
+            image,
+            icon,
+            status
+        } = req.body;
+
+
+        if (!name) {
+            return res.status(400).json({
+                message: "Category name is required"
+            });
+        }
+
+
+        const category = await Category.create({
+            name,
+            description,
+            image,
+            icon,
+            status
+        });
+
+
+        res.status(201).json(category);
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+});
+
+
+// update categor
+router.put("/:id", protect, requireAdmin, async (req, res) => {
+    try {
+        const {
+            name,
+            description,
+            image,
+            icon,
+            status
+        } = req.body;
+
+
+        const category = await Category.findByIdAndUpdate(
+            req.params.id,
+            {
+                name,
+                description,
+                image,
+                icon,
+                status
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+
+        if (!category) {
+            return res.status(404).json({
+                message: "Category not found"
+            });
+        }
+
+
+        res.json(category);
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+});
+
+
+// delete category
+router.delete("/:id", protect, requireAdmin, async (req, res) => {
+    try {
+        const placeCount = await Place.countDocuments({
+            category: req.params.id
+        });
+
+
+        if (placeCount > 0) {
+            return res.status(409).json({
+                message: "Cannot delete a category that has places"
+            });
+        }
+
+
+        const category = await Category.findByIdAndDelete(
+            req.params.id
+        );
+
+
+        if (!category) {
+            return res.status(404).json({
+                message: "Category not found"
+            });
+        }
+
+
+        res.json({
+            message: "Category deleted successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
+
+
 export default router;
