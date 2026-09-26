@@ -55,4 +55,38 @@ function setupAuthSwitch() {
 
 }
 
+/* =========================================
+   PASSWORD SHOW / HIDE
+========================================= */
+
+function setupPasswordButtons() {
+
+    const buttons = document.querySelectorAll(".password-toggle");
+
+    buttons.forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+            const input = document.getElementById(
+                button.dataset.target
+            );
+
+            if (input.type === "password") {
+
+                input.type = "text";
+                button.textContent = "Hide";
+
+            } else {
+
+                input.type = "password";
+                button.textContent = "Show";
+
+            }
+
+        });
+
+    });
+
+}
+
 
