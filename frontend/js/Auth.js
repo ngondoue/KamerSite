@@ -174,3 +174,110 @@ function setupLogin() {
 }
 
 
+/* =========================================
+   SIGN UP
+========================================= */
+
+function setupSignup() {
+
+    const form = document.getElementById("signup-form");
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const error = document.getElementById("signup-error");
+        const button = document.getElementById("signup-submit");
+
+        error.hidden = true;
+
+
+        const name = document
+            .getElementById("signup-name")
+            .value
+            .trim();
+
+        const email = document
+            .getElementById("signup-email")
+            .value
+            .trim();
+
+        const password = document
+            .getElementById("signup-password")
+            .value;
+
+        const confirmPassword = document
+            .getElementById("signup-confirm")
+            .value;
+
+
+        if (!name || !email || !password || !confirmPassword) {
+
+            error.textContent =
+                "Please fill in all fields.";
+
+            error.hidden = false;
+
+            return;
+        }
+
+
+        if (password.length < 8) {
+
+            error.textContent =
+                "Password must be at least 8 characters.";
+
+            error.hidden = false;
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            error.textContent =
+                "Passwords do not match.";
+
+            error.hidden = false;
+
+            return;
+        }
+
+
+        button.disabled = true;
+        button.textContent = "Creating account...";
+
+
+        try {
+
+            const result = await apiFetch(
+                "/auth/register",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password
+                    })
+                }
+            );
+
+
+            saveSession(result.user, result.token);
+
+            window.location.href = "index.html";
+
+
+        } catch (err) {
+
+            error.textContent = err.message;
+            error.hidden = false;
+
+            button.disabled = false;
+            button.textContent = "Create Account";
+
+        }
+
+    });
+
+}
