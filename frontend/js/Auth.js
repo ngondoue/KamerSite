@@ -90,3 +90,87 @@ function setupPasswordButtons() {
 }
 
 
+/* =========================================
+   LOGIN
+========================================= */
+
+function setupLogin() {
+
+    const form = document.getElementById("login-form");
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const error = document.getElementById("login-error");
+        const button = document.getElementById("login-submit");
+
+        error.hidden = true;
+
+        const email = document
+            .getElementById("login-email")
+            .value
+            .trim();
+
+        const password = document
+            .getElementById("login-password")
+            .value;
+
+
+        if (!email || !password) {
+
+            error.textContent =
+                "Please enter your email and password.";
+
+            error.hidden = false;
+
+            return;
+        }
+
+
+        button.disabled = true;
+        button.textContent = "Logging in...";
+
+
+        try {
+
+            const result = await apiFetch(
+                "/auth/login",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                }
+            );
+
+
+            saveSession(result.user, result.token);
+
+
+            if (result.user.role === "admin") {
+
+                window.location.href = "admin.html";
+
+            } else {
+
+                window.location.href = "index.html";
+
+            }
+
+        } catch (err) {
+
+            error.textContent = err.message;
+            error.hidden = false;
+
+            button.disabled = false;
+            button.textContent = "Login";
+
+        }
+
+    });
+
+}
+
+
