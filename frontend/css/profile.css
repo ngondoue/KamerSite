@@ -75,4 +75,34 @@
     font-size: 0.8rem;
 }
 
+/* =========================================
+   PROFILE PANELS
+========================================= */
+
+.profile-panel {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+}
+
+
+.profile-panel h2 {
+    margin-bottom: 5px;
+}
+
+
+.panel-description {
+    color: var(--text-muted);
+
+    font-size: 0.9rem;
+
+    margin-bottom: 20px;
+}
+
 
