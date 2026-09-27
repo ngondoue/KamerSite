@@ -1,0 +1,212 @@
+/* =========================================
+   PROFILE PAGE
+   Member 1
+========================================= */
+
+.profile-page {
+    max-width: 850px;
+}
+
+
+/* =========================================
+   PROFILE HEADER
+========================================= */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    background: var(--green-50);
+
+    border: 1px solid var(--green-100);
+
+    border-radius: var(--radius-lg);
+}
+
+
+.profile-avatar {
+    width: 75px;
+    height: 75px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--green-700);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+
+.profile-info h1 {
+    margin-bottom: 5px;
+}
+
+
+.profile-email {
+    color: var(--text-muted);
+
+    margin-bottom: 10px;
+}
+
+
+.profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.profile-joined {
+    color: var(--text-soft);
+
+    font-size: 0.8rem;
+}
+
+/* =========================================
+   PROFILE PANELS
+========================================= */
+
+.profile-panel {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+}
+
+
+.profile-panel h2 {
+    margin-bottom: 5px;
+}
+
+
+.panel-description {
+    color: var(--text-muted);
+
+    font-size: 0.9rem;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 17px;
+}
+
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.form-field label {
+    font-weight: 600;
+
+    font-size: 0.9rem;
+}
+
+
+.form-field input {
+    padding: 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 0.95rem;
+}
+
+
+.form-field input:focus {
+    border-color: var(--green-600);
+}
+
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.form-error {
+    padding: 10px;
+
+    border-radius: 6px;
+
+    background: #fef3f2;
+
+    color: #b42318;
+
+    font-size: 0.85rem;
+}
+
+
+.form-success {
+    padding: 10px;
+
+    border-radius: 6px;
+
+    background: #ecfdf3;
+
+    color: #067647;
+
+    font-size: 0.85rem;
+}
+/* =========================================
+   ACCOUNT
+========================================= */
+
+.account-panel {
+    margin-bottom: 40px;
+}
+
+
+#profile-logout-btn {
+    min-width: 120px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-panel {
+        padding: 20px;
+    }
+
+}
+
