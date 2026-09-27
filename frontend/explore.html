@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Explore | Yaoundé Gems</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/explore.css">
+
+</head>
+
+<body>
+
+    <div id="site-header"></div>
+
+    <main>
+
+        <!-- Search -->
+        <section class="hero explore-hero">
+
+            <div class="container hero-inner">
+
+                <h1>
+                    Explore Yaoundé
+                    <br>
+                    <span class="hero-highlight">
+                        Discover Amazing Places
+                    </span>
+                </h1>
+
+                <p class="hero-sub">
+                    Search for restaurants, parks, zoos and
+                    other leisure spots.
+                </p>
+
+                <form
+                    class="search-bar"
+                    id="explore-search-form">
+
+                    <input
+                        type="text"
+                        id="explore-search-input"
+                        placeholder="Search places..."
+                    >
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Search
+
+                    </button>
+
+                </form>
+
+                <div
+                    class="category-pills"
+                    id="explore-category-pills">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results -->
+        <section class="section container">
+
+            <div class="explore-toolbar">
+
+                <div class="section-heading">
+
+                    <h2 id="explore-results-heading">
+                        All Places
+                    </h2>
+
+                </div>
+
+                <div class="explore-filters">
+
+                    <select id="filter-category">
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                    </select>
+
+
+                    <select id="filter-rating">
+
+                        <option value="">
+                            Any Rating
+                        </option>
+
+                        <option value="4.5">
+                            4.5+
+                        </option>
+
+                        <option value="4">
+                            4+
+                        </option>
+
+                        <option value="3">
+                            3+
+                        </option>
+
+                    </select>
+
+
+                    <select id="filter-price">
+
+                        <option value="">
+                            Any Price
+                        </option>
+
+                        <option value="$">$</option>
+                        <option value="$$">$$</option>
+                        <option value="$$$">$$$</option>
+                        <option value="$$$$">$$$$</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="place-grid"
+                id="explore-results-grid">
+            </div>
+
+        </section>
+
+
+        <!-- Categories -->
+        <section class="section container">
+
+            <div class="section-heading">
+
+                <h2>Browse by Category</h2>
+
+            </div>
+
+            <div
+                class="category-list"
+                id="category-browse-list">
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div id="site-footer"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/explore.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+/* Home Page */
+
+.home-hero {
+    background:
+        linear-gradient(
+            rgba(248, 246, 239, 0.35),
+            rgba(248, 246, 239, 0.95)
+        ),
+        url("https://images.unsplash.com/photo-1580060839134-75a50fb3a2f4?w=1600&q=80");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.about-content {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+
+    .home-hero {
+        padding-top: 50px;
+    }
+
+}
