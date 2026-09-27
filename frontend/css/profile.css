@@ -179,5 +179,34 @@
 
     font-size: 0.85rem;
 }
+/* =========================================
+   ACCOUNT
+========================================= */
 
+.account-panel {
+    margin-bottom: 40px;
+}
+
+
+#profile-logout-btn {
+    min-width: 120px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-panel {
+        padding: 20px;
+    }
+
+}
 
