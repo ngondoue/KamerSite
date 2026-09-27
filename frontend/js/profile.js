@@ -27,38 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-
-/* =========================================
-   USER PROFILE
-   Member 1
-========================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const profilePage = document.querySelector(".profile-page");
-
-    if (!profilePage) {
-        return;
-    }
-
-
-    if (!isLoggedIn()) {
-
-        window.location.href = "auth.html";
-
-        return;
-    }
-
-
-    loadProfile();
-
-    setupProfileForm();
-
-    setupLogout();
-
-});
-
-
 /* =========================================
    LOAD PROFILE
 ========================================= */
@@ -143,8 +111,6 @@ function displayProfile(user) {
     imageInput.value = user.profileImage || "";
 
 }
-
-
 /* =========================================
    UPDATE PROFILE
 ========================================= */
@@ -242,19 +208,3 @@ function setupProfileForm() {
 }
 
 
-/* =========================================
-   LOGOUT
-========================================= */
-
-function setupLogout() {
-
-    const button =
-        document.getElementById("profile-logout-btn");
-
-    button.addEventListener("click", () => {
-
-        logout();
-
-    });
-
-}
