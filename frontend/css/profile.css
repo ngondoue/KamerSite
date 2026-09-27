@@ -1,0 +1,78 @@
+/* =========================================
+   PROFILE PAGE
+   Member 1
+========================================= */
+
+.profile-page {
+    max-width: 850px;
+}
+
+
+/* =========================================
+   PROFILE HEADER
+========================================= */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    background: var(--green-50);
+
+    border: 1px solid var(--green-100);
+
+    border-radius: var(--radius-lg);
+}
+
+
+.profile-avatar {
+    width: 75px;
+    height: 75px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--green-700);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+
+.profile-info h1 {
+    margin-bottom: 5px;
+}
+
+
+.profile-email {
+    color: var(--text-muted);
+
+    margin-bottom: 10px;
+}
+
+
+.profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.profile-joined {
+    color: var(--text-soft);
+
+    font-size: 0.8rem;
+}
+
+
