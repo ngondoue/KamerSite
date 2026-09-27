@@ -207,4 +207,19 @@ function setupProfileForm() {
 
 }
 
+/* =========================================
+   LOGOUT
+========================================= */
 
+function setupLogout() {
+
+    const button =
+        document.getElementById("profile-logout-btn");
+
+    button.addEventListener("click", () => {
+
+        logout();
+
+    });
+
+}
