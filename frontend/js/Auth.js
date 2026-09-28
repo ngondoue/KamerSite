@@ -55,9 +55,7 @@ function setupAuthSwitch() {
 
 }
 
-/* =========================================
-   PASSWORD SHOW / HIDE
-========================================= */
+/* PASSWORD SHOW / HIDE */
 
 function setupPasswordButtons() {
 
@@ -90,9 +88,7 @@ function setupPasswordButtons() {
 }
 
 
-/* =========================================
-   LOGIN
-========================================= */
+/* LOGIN*/
 
 function setupLogin() {
 
@@ -174,9 +170,7 @@ function setupLogin() {
 }
 
 
-/* =========================================
-   SIGN UP
-========================================= */
+/* SIGN UP */
 
 function setupSignup() {
 
