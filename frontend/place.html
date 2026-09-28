@@ -76,6 +76,178 @@
 
             </div>
 
+
+            <!-- PLACE INFORMATION -->
+
+            <div class="place-layout">
+
+                <div class="place-main">
+
+                    <div class="place-card-section">
+
+                        <h2>About this place</h2>
+
+                        <p id="place-description">
+                            Loading...
+                        </p>
+
+                    </div>
+
+
+                    <div class="place-card-section">
+
+                        <h2>Activities</h2>
+
+                        <div
+                            id="place-activities"
+                            class="tag-list"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="place-card-section">
+
+                        <h2>Amenities</h2>
+
+                        <div
+                            id="place-amenities"
+                            class="tag-list"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- REVIEWS -->
+
+                    <div class="place-card-section reviews-section">
+
+                        <div class="section-title-row">
+
+                            <div>
+
+                                <h2>Reviews</h2>
+
+                                <p class="section-description">
+                                    What visitors say about this place.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REVIEW FORM -->
+
+                        <div
+                            id="review-form-container"
+                            class="review-form-container"
+                            hidden
+                        >
+
+                            <h3>Write a Review</h3>
+
+                            <form id="review-form">
+
+                                <div class="form-field">
+
+                                    <label for="review-rating">
+                                        Rating
+                                    </label>
+
+                                    <select id="review-rating" required>
+
+                                        <option value="">
+                                            Select rating
+                                        </option>
+
+                                        <option value="5">
+                                            5 - Excellent
+                                        </option>
+
+                                        <option value="4">
+                                            4 - Very Good
+                                        </option>
+
+                                        <option value="3">
+                                            3 - Good
+                                        </option>
+
+                                        <option value="2">
+                                            2 - Fair
+                                        </option>
+
+                                        <option value="1">
+                                            1 - Poor
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-field">
+
+                                    <label for="review-comment">
+                                        Comment
+                                    </label>
+
+                                    <textarea
+                                        id="review-comment"
+                                        maxlength="1000"
+                                        rows="5"
+                                        placeholder="Share your experience..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <p
+                                    id="review-form-error"
+                                    class="form-error"
+                                    hidden
+                                ></p>
+
+
+                                <p
+                                    id="review-form-success"
+                                    class="form-success"
+                                    hidden
+                                ></p>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    id="review-submit"
+                                >
+                                    Submit Review
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <div
+                            id="review-login-message"
+                            class="review-login-message"
+                            hidden
+                        >
+                            <p>
+                                Login to write a review.
+                            </p>
+
+                            <a
+                                href="auth.html"
+                                class="btn btn-primary"
+                            >
+                                Login
+                            </a>
+
+                        </div>
+
 </body>
 
 </html>
