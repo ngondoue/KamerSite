@@ -1,9 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -23,10 +24,10 @@
 
     <main>
 
+        <!-- Profile page main container -->
         <section class="section container profile-page">
 
-            <!-- PROFILE HEADER -->
-
+            <!-- User summary card -->
             <div class="profile-card">
 
                 <div
@@ -70,83 +71,105 @@
             </div>
 
 
-            <!-- EDIT PROFILE -->
+            <!-- Main profile actions and saved content -->
+            <div class="profile-grid">
 
-            <div class="profile-panel">
+                <!-- Edit profile form -->
+                <div class="profile-panel">
 
-                <h2>Edit Profile</h2>
+                    <h2>Edit Profile</h2>
 
-                <p class="panel-description">
-                    Update your account information.
-                </p>
-
-
-                <form
-                    id="profile-form"
-                    class="profile-form"
-                >
-
-                    <div class="form-field">
-
-                        <label for="profile-name-input">
-                            Full name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="profile-name-input"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-field">
-
-                        <label for="profile-image-input">
-                            Profile image URL
-                        </label>
-
-                        <input
-                            type="url"
-                            id="profile-image-input"
-                            placeholder="https://example.com/image.jpg"
-                        >
-
-                    </div>
-
-
-                    <p
-                        id="profile-form-error"
-                        class="form-error"
-                        hidden
-                    ></p>
-
-
-                    <p
-                        id="profile-form-success"
-                        class="form-success"
-                        hidden
-                    >
-                        Profile updated successfully.
+                    <p class="panel-description">
+                        Update your account information.
                     </p>
 
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        id="profile-form-submit"
+                    <form
+                        id="profile-form"
+                        class="profile-form"
                     >
-                        Save Changes
-                    </button>
 
-                </form>
+                        <div class="form-field">
+
+                            <label for="profile-name-input">
+                                Full name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profile-name-input"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="profile-image-input">
+                                Profile image URL
+                            </label>
+
+                            <input
+                                type="url"
+                                id="profile-image-input"
+                                placeholder="https://example.com/image.jpg"
+                            >
+
+                        </div>
+
+
+                        <p
+                            id="profile-form-error"
+                            class="form-error"
+                            hidden
+                        ></p>
+
+
+                        <p
+                            id="profile-form-success"
+                            class="form-success"
+                            hidden
+                        >
+                            Profile updated successfully.
+                        </p>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Save Changes
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- Favorite places section -->
+                <div class="profile-panel">
+
+                    <h2>My Favorites</h2>
+
+                    <p class="panel-description">
+                        Places you have saved while exploring.
+                    </p>
+
+
+                    <div
+                        id="favorites-list"
+                        class="favorites-list"
+                    >
+                        Loading favorites...
+                    </div>
+
+                </div>
 
             </div>
 
 
-           <!-- ACCOUNT -->
-
+            <!-- Account management section -->
             <div class="profile-panel account-panel">
 
                 <h2>Account</h2>
@@ -176,4 +199,5 @@
     <script src="js/profile.js"></script>
 
 </body>
+
 </html>

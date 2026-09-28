@@ -1,11 +1,6 @@
-/* PROFILE PAGE*/
-
 .profile-page {
     max-width: 850px;
 }
-
-
-/*PROFILE HEADER*/
 
 .profile-card {
     display: flex;
@@ -23,7 +18,6 @@
 
     border-radius: var(--radius-lg);
 }
-
 
 .profile-avatar {
     width: 75px;
@@ -44,11 +38,9 @@
     font-weight: 700;
 }
 
-
 .profile-info h1 {
     margin-bottom: 5px;
 }
-
 
 .profile-email {
     color: var(--text-muted);
@@ -56,21 +48,17 @@
     margin-bottom: 10px;
 }
 
-
 .profile-meta {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-
 .profile-joined {
     color: var(--text-soft);
 
     font-size: 0.8rem;
 }
-
-/* PROFILE PANELS */
 
 .profile-panel {
     background: white;
@@ -84,11 +72,9 @@
     margin-bottom: 20px;
 }
 
-
 .profile-panel h2 {
     margin-bottom: 5px;
 }
-
 
 .panel-description {
     color: var(--text-muted);
@@ -98,16 +84,12 @@
     margin-bottom: 20px;
 }
 
-
-/* FORM*/
-
 .profile-form {
     display: flex;
     flex-direction: column;
 
     gap: 17px;
 }
-
 
 .form-field {
     display: flex;
@@ -116,13 +98,11 @@
     gap: 7px;
 }
 
-
 .form-field label {
     font-weight: 600;
 
     font-size: 0.9rem;
 }
-
 
 .form-field input {
     padding: 13px;
@@ -136,13 +116,9 @@
     font-size: 0.95rem;
 }
 
-
 .form-field input:focus {
     border-color: var(--green-600);
 }
-
-
-/* MESSAGES*/
 
 .form-error {
     padding: 10px;
@@ -156,7 +132,6 @@
     font-size: 0.85rem;
 }
 
-
 .form-success {
     padding: 10px;
 
@@ -168,19 +143,14 @@
 
     font-size: 0.85rem;
 }
-/*ACCOUNT*/
 
 .account-panel {
     margin-bottom: 40px;
 }
 
-
 #profile-logout-btn {
     min-width: 120px;
 }
-
-
-/*RESPONSIVE*/
 
 @media (max-width: 600px) {
 

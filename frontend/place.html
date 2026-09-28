@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Place | Yaoundé Gems</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/place.css">
+
+</head>
+
+<body>
+
+    <div id="site-header"></div>
+
+
+    <main>
+
+        <section class="section container">
+
+            <!-- PLACE HEADER -->
+
+            <div class="place-header">
+
+                <div>
+
+                    <a
+                        href="explore.html"
+                        class="back-link"
+                    >
+                        ← Back to Explore
+                    </a>
+
+                    <h1 id="place-name">
+                        Loading...
+                    </h1>
+
+                    <p
+                        id="place-location"
+                        class="place-location"
+                    ></p>
+
+                </div>
+
+
+                <button
+                    id="favorite-button"
+                    class="btn btn-secondary favorite-button"
+                >
+                    ♡ Save Place
+                </button>
+
+            </div>
+
+
+            <!-- PLACE IMAGE -->
+
+            <div
+                id="place-gallery"
+                class="place-gallery"
+            >
+
+                <img
+                    id="main-place-image"
+                    src=""
+                    alt="Place image"
+                >
+
+            </div>
+
+
+            <!-- PLACE INFORMATION -->
+
+            <div class="place-layout">
+
+                <div class="place-main">
+
+                    <div class="place-card-section">
+
+                        <h2>About this place</h2>
+
+                        <p id="place-description">
+                            Loading...
+                        </p>
+
+                    </div>
+
+
+                    <div class="place-card-section">
+
+                        <h2>Activities</h2>
+
+                        <div
+                            id="place-activities"
+                            class="tag-list"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="place-card-section">
+
+                        <h2>Amenities</h2>
+
+                        <div
+                            id="place-amenities"
+                            class="tag-list"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- REVIEWS -->
+
+                    <div class="place-card-section reviews-section">
+
+                        <div class="section-title-row">
+
+                            <div>
+
+                                <h2>Reviews</h2>
+
+                                <p class="section-description">
+                                    What visitors say about this place.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REVIEW FORM -->
+
+                        <div
+                            id="review-form-container"
+                            class="review-form-container"
+                            hidden
+                        >
+
+                            <h3>Write a Review</h3>
+
+                            <form id="review-form">
+
+                                <div class="form-field">
+
+                                    <label for="review-rating">
+                                        Rating
+                                    </label>
+
+                                    <select id="review-rating" required>
+
+                                        <option value="">
+                                            Select rating
+                                        </option>
+
+                                        <option value="5">
+                                            5 - Excellent
+                                        </option>
+
+                                        <option value="4">
+                                            4 - Very Good
+                                        </option>
+
+                                        <option value="3">
+                                            3 - Good
+                                        </option>
+
+                                        <option value="2">
+                                            2 - Fair
+                                        </option>
+
+                                        <option value="1">
+                                            1 - Poor
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-field">
+
+                                    <label for="review-comment">
+                                        Comment
+                                    </label>
+
+                                    <textarea
+                                        id="review-comment"
+                                        maxlength="1000"
+                                        rows="5"
+                                        placeholder="Share your experience..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <p
+                                    id="review-form-error"
+                                    class="form-error"
+                                    hidden
+                                ></p>
+
+
+                                <p
+                                    id="review-form-success"
+                                    class="form-success"
+                                    hidden
+                                ></p>
+
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    id="review-submit"
+                                >
+                                    Submit Review
+                                </button>
+
+                            </form>
+
+                        </div>
+
+
+                        <div
+                            id="review-login-message"
+                            class="review-login-message"
+                            hidden
+                        >
+                            <p>
+                                Login to write a review.
+                            </p>
+
+                            <a
+                                href="auth.html"
+                                class="btn btn-primary"
+                            >
+                                Login
+                            </a>
+
+                        </div>
+
+
+                        <!-- REVIEWS LIST -->
+
+                        <div
+                            id="reviews-list"
+                            class="reviews-list"
+                        >
+                            Loading reviews...
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SIDE INFORMATION -->
+
+                <aside class="place-sidebar">
+
+                    <div class="info-box">
+
+                        <h3>Place Information</h3>
+
+
+                        <div class="info-item">
+
+                            <strong>Entry Fee</strong>
+
+                            <span id="place-fee">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Price Range</strong>
+
+                            <span id="place-price">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Opening Hours</strong>
+
+                            <span id="place-hours">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Rating</strong>
+
+                            <span id="place-rating">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Reviews</strong>
+
+                            <span id="place-review-count">
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <strong>Address</strong>
+
+                            <span id="place-address">
+                                -
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="place-actions">
+
+                        <button
+                            id="share-place"
+                            class="btn btn-secondary"
+                        >
+                            Share Place
+                        </button>
+
+                        <a
+                            id="directions-link"
+                            href="#"
+                            target="_blank"
+                            class="btn btn-primary"
+                        >
+                            Get Directions
+                        </a>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div id="site-footer"></div>
+
+
+    <script src="js/main.js"></script>
+    <script src="js/place.js"></script>
+
+</body>
+
+</html>
