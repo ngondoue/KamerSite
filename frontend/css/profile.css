@@ -1,437 +1,200 @@
+/* Profile page and favorites */
 
-   // Profile page logic for displaying the user and their saved favorites.
-document.addEventListener("DOMContentLoaded", () => {
-
-    const profilePage =
-        document.querySelector(".profile-page");
-
-
-    if (!profilePage) {
-        return;
-    }
-
-
-    if (!isLoggedIn()) {
-
-        window.location.href =
-            "auth.html";
-
-        return;
-    }
-
-
-    loadProfile();
-
-    setupProfileForm();
-
-    setupLogout();
-
-    loadFavorites();
-
-});
-
-
-async function loadProfile() {
-
-    try {
-
-        const result =
-            await apiFetch("/auth/profile");
-
-
-        displayProfile(
-            result.user
-        );
-
-
-        localStorage.setItem(
-            "kamersite_user",
-            JSON.stringify(result.user)
-        );
-
-    } catch (error) {
-
-        logout();
-
-    }
-
+.profile-page {
+    max-width: 850px;
 }
 
+/* User profile summary */
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    background: var(--green-50);
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-lg);
+}
 
-function displayProfile(user) {
+.profile-avatar {
+    width: 75px;
+    height: 75px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--green-700);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    font-weight: 700;
+}
 
-    document.getElementById(
-        "profile-avatar"
-    ).textContent =
-        user.name
-            ? user.name.charAt(0).toUpperCase()
-            : "?";
+.profile-info h1 {
+    margin-bottom: 5px;
+}
 
+.profile-email {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
 
-    document.getElementById(
-        "profile-name"
-    ).textContent =
-        user.name;
+.profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
+.profile-joined {
+    color: var(--text-soft);
+    font-size: 0.8rem;
+}
 
-    document.getElementById(
-        "profile-email"
-    ).textContent =
-        user.email;
+/* General profile panels */
+.profile-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 25px;
+    margin-bottom: 20px;
+}
 
+.profile-panel h2 {
+    margin-bottom: 5px;
+}
 
-    document.getElementById(
-        "profile-role-tag"
-    ).textContent =
-        user.role === "admin"
-            ? "Admin"
-            : "Member";
+.panel-description {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
 
+/* Profile form styling */
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
 
-    if (user.createdAt) {
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
 
-        const date =
-            new Date(user.createdAt);
+.form-field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
 
+.form-field input {
+    padding: 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    font-size: 0.95rem;
+}
 
-        document.getElementById(
-            "profile-joined"
-        ).textContent =
-            `Member since ${date.toLocaleDateString(
-                "en-US",
-                {
-                    year: "numeric",
-                    month: "long"
-                }
-            )}`;
+.form-field input:focus {
+    border-color: var(--green-600);
+}
 
+.form-error {
+    padding: 10px;
+    border-radius: 6px;
+    background: #fef3f2;
+    color: #b42318;
+    font-size: 0.85rem;
+}
+
+.form-success {
+    padding: 10px;
+    border-radius: 6px;
+    background: #ecfdf3;
+    color: #067647;
+    font-size: 0.85rem;
+}
+
+/* Favorite list styles */
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.favorite-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: white;
+}
+
+.favorite-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.favorite-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.favorite-info a {
+    color: var(--green-700);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.favorite-location {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.favorite-remove {
+    border: none;
+    background: transparent;
+    color: #b42318;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.empty-favorites {
+    padding: 18px;
+    background: var(--green-50);
+    border: 1px dashed var(--green-200);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+/* Account section */
+.account-panel {
+    margin-bottom: 40px;
+}
+
+#profile-logout-btn {
+    min-width: 120px;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+    .profile-card {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-
-    document.getElementById(
-        "profile-name-input"
-    ).value =
-        user.name || "";
-
-
-    document.getElementById(
-        "profile-image-input"
-    ).value =
-        user.profileImage || "";
-
-}
-
-
-function setupProfileForm() {
-
-    const form =
-        document.getElementById(
-            "profile-form"
-        );
-
-
-    form.addEventListener(
-        "submit",
-        async (event) => {
-
-            event.preventDefault();
-
-
-            const error =
-                document.getElementById(
-                    "profile-form-error"
-                );
-
-
-            const success =
-                document.getElementById(
-                    "profile-form-success"
-                );
-
-
-            error.hidden = true;
-            success.hidden = true;
-
-
-            const name =
-                document.getElementById(
-                    "profile-name-input"
-                ).value.trim();
-
-
-            const profileImage =
-                document.getElementById(
-                    "profile-image-input"
-                ).value.trim();
-
-
-            if (!name) {
-
-                error.textContent =
-                    "Name cannot be empty.";
-
-                error.hidden = false;
-
-                return;
-            }
-
-
-            try {
-
-                const result =
-                    await apiFetch(
-                        "/auth/profile",
-                        {
-                            method: "PUT",
-
-                            body: JSON.stringify({
-                                name,
-                                profileImage
-                            })
-                        }
-                    );
-
-
-                displayProfile(
-                    result.user
-                );
-
-
-                localStorage.setItem(
-                    "kamersite_user",
-                    JSON.stringify(result.user)
-                );
-
-
-                success.hidden = false;
-
-
-            } catch (err) {
-
-                error.textContent =
-                    err.message;
-
-                error.hidden = false;
-
-            }
-
-        }
-    );
-
-}
-
-
-function setupLogout() {
-
-    const button =
-        document.getElementById(
-            "profile-logout-btn"
-        );
-
-
-    button.addEventListener(
-        "click",
-        logout
-    );
-
-}
-
-
-async function loadFavorites() {
-
-    const container =
-        document.getElementById(
-            "favorites-list"
-        );
-
-
-    if (!container) {
-        return;
+    .profile-panel {
+        padding: 20px;
     }
 
-
-    try {
-
-        const favorites =
-            await apiFetch(
-                "/favorites"
-            );
-
-
-        const validFavorites =
-            favorites.filter(
-                (favorite) =>
-                    favorite.place
-            );
-
-
-        if (
-            validFavorites.length === 0
-        ) {
-
-            container.innerHTML = `
-                <div class="empty-favorites">
-
-                    <p>
-                        You have not saved any places yet.
-                    </p>
-
-                    <a
-                        href="explore.html"
-                        class="btn btn-primary"
-                    >
-                        Explore Places
-                    </a>
-
-                </div>
-            `;
-
-            return;
-        }
-
-
-        container.innerHTML =
-            validFavorites
-                .map(
-                    favoriteItem
-                )
-                .join("");
-
-
-        setupFavoriteRemoveButtons();
-
-
-    } catch (error) {
-
-        container.innerHTML = `
-            <p class="form-error">
-                Could not load your favorites.
-            </p>
-        `;
-
+    .favorite-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
-
-}
-
-
-function favoriteItem(favorite) {
-
-    const place =
-        favorite.place;
-
-
-    const image =
-        place.images &&
-        place.images.length > 0
-            ? place.images[0]
-            : "https://via.placeholder.com/100";
-
-
-    return `
-        <div
-            class="favorite-item"
-            data-place-id="${place._id}"
-        >
-
-            <img
-                src="${image}"
-                alt="${escapeHtml(place.name)}"
-                class="favorite-image"
-            >
-
-            <div class="favorite-info">
-
-                <a
-                    href="place.html?slug=${encodeURIComponent(
-                        place.slug
-                    )}"
-                >
-                    ${escapeHtml(place.name)}
-                </a>
-
-                <span class="favorite-location">
-                    ${escapeHtml(
-                        place.location || ""
-                    )}
-                </span>
-
-            </div>
-
-
-            <button
-                class="favorite-remove"
-                data-place-id="${place._id}"
-            >
-                Remove
-            </button>
-
-        </div>
-    `;
-
-}
-
-
-function setupFavoriteRemoveButtons() {
-
-    const buttons =
-        document.querySelectorAll(
-            ".favorite-remove"
-        );
-
-
-    buttons.forEach((button) => {
-
-        button.addEventListener(
-            "click",
-            async () => {
-
-                button.disabled = true;
-
-                try {
-
-                    await apiFetch(
-                        `/favorites/${button.dataset.placeId}`,
-                        {
-                            method: "DELETE"
-                        }
-                    );
-
-
-                    const item =
-                        document.querySelector(
-                            `[data-place-id="${button.dataset.placeId}"]`
-                        );
-
-
-                    if (item) {
-                        item.remove();
-                    }
-
-
-                    const remaining =
-                        document.querySelectorAll(
-                            ".favorite-item"
-                        );
-
-
-                    if (remaining.length === 0) {
-
-                        loadFavorites();
-
-                    }
-
-
-                } catch (error) {
-
-                    alert(error.message);
-
-                    button.disabled = false;
-
-                }
-
-            }
-        );
-
-    });
-
 }

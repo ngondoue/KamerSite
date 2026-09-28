@@ -1,5 +1,6 @@
-/* Place Details Page */
+/* Place details page styles */
 
+/* Place header and title */
 .place-hero {
     padding: 45px 0 60px;
 
@@ -35,8 +36,7 @@
 }
 
 
-/* Main place section */
-
+/* Main content layout */
 .place-container {
     margin-top: -25px;
     position: relative;
@@ -49,8 +49,7 @@
 }
 
 
-/* Gallery */
-
+/* Gallery layout */
 .place-gallery {
     position: relative;
 
@@ -115,8 +114,7 @@
 }
 
 
-/* Place information */
-
+/* Place information panel */
 .place-info {
     padding: 25px;
 
@@ -151,8 +149,7 @@
 }
 
 
-/* Details */
-
+/* Details and amenities */
 .place-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -170,8 +167,7 @@
 }
 
 
-/* Activities and amenities */
-
+/* Tags and activity chips */
 .simple-list {
     display: flex;
     flex-wrap: wrap;
@@ -190,8 +186,7 @@
 }
 
 
-/* Full gallery */
-
+/* Full gallery grid */
 .full-gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -207,13 +202,12 @@
 }
 
 
-/* Nearby */
-
+/* Nearby places */
 #nearby-places {
     margin-top: 20px;
 }
 
-
+/* Responsive styles */
 @media (max-width: 850px) {
 
     .place-top {
