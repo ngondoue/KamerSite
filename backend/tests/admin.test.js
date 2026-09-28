@@ -28,5 +28,19 @@ const res = await request(BASE_URL).get('/api/admin/dashboard').set('Authorizati
 expect(res.status).toBe(200);
 expect(res.body).toHaveProperty('totalPlaces');
 });
+test('dashboard counts reflect the real database', async () => {
+const token = await adminToken();
+
+const category = await Category.create({ name: 'Parks' });
+await Place.create([
+{ name: 'Published', description: 'x', category: category._id, location: 'x', status: 'published' },
+{ name: 'Draft', description: 'x', category: category._id, location: 'x', status: 'draft' },
+]);
+
+const res = await request(BASE_URL).get('/api/admin/dashboard').set('Authorization', `Bearer ${token}`);
+expect(res.body.totalPlaces).toBe(2);
+expect(res.body.publishedPlaces).toBe(1);
+expect(res.body.draftPlaces).toBe(1);
+});
 
 });
