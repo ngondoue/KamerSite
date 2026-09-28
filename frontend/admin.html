@@ -100,3 +100,610 @@
                     </div>
 
                 </div>
+          </section>
+          <section id="places" class="admin-section">
+
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h2>Manage Places</h2>
+
+                        <button
+                            class="btn btn-primary"
+                            id="showPlaceFormBtn">
+                            Add Place
+                        </button>
+
+                    </div>
+                    <div id="placeFormContainer" class="form-container hidden">
+
+                        <form id="placeForm" class="admin-form">
+
+                            <input
+                                type="hidden"
+                                id="placeId">
+
+                            <div>
+                                <label for="placeName">
+                                    Place Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeName"
+                                    required>
+                            </div>
+         
+                            <div>
+                                <label for="placeCategory">
+                                    Category
+                                </label>
+
+                                <select
+                                    id="placeCategory"
+                                    required>
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                </select>
+                            </div>
+
+                    <div class="full">
+
+                                <label for="placeDescription">
+                                    Description
+                                </label>
+
+                                <textarea
+                                    id="placeDescription"
+                                    required></textarea>
+
+                            </div>
+                            
+                            <div>
+
+                                <label for="placeLocation">
+                                    Location
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeLocation"
+                                    placeholder="Example: Yaoundé">
+
+                            </div>
+ <div>
+
+                                <label for="placeAddress">
+                                    Address
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeAddress">
+
+                            </div>
+
+
+                            <div>
+
+                                <label for="placeOpeningHours">
+                                    Opening Hours
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeOpeningHours"
+                                    placeholder="Example: 8:00 AM - 6:00 PM">
+
+                            </div>
+
+
+                            <div>
+
+                                <label for="placeEntryFee">
+                                    Entry Fee
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeEntryFee"
+                                    placeholder="Example: 2,000 FCFA">
+
+                            </div>
+ <div>
+
+                                <label for="placePriceRange">
+                                    Price Range
+                                </label>
+
+                                <select id="placePriceRange">
+
+                                    <option value="$">$</option>
+                                    <option value="$$">$$</option>
+                                    <option value="$$$">$$$</option>
+                                    <option value="$$$$">$$$$</option>
+
+                                </select>
+                              < /div>
+
+  <div>
+
+                                <label for="placeStatus">
+                                    Status
+                                </label>
+
+                                <select id="placeStatus">
+
+                                    <option value="draft">
+                                        Draft
+                                    </option>
+
+                                    <option value="published">
+                                        Published
+                                    </option>
+
+                                    <option value="archived">
+                                        Archived
+                                    </option>
+
+                                </select>
+
+                            </div>
+ 
+                              <div class="full">
+
+                                <label for="placeActivities">
+                                    Activities
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeActivities"
+                                    placeholder="Hiking, Swimming, Photography">
+
+                                <small>
+                                    Separate activities with commas.
+                                </small>
+
+                            </div>
+
+
+                            <div class="full">
+
+                                <label for="placeAmenities">
+                                    Amenities
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeAmenities"
+                                    placeholder="Parking, Restaurant, Restrooms">
+
+                                <small>
+                                    Separate amenities with commas.
+                                </small>
+
+                            </div>
+
+
+                            <div class="full">
+
+                                <label for="placeImage">
+                                    Main Image URL
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="placeImage"
+                                    placeholder="https://...">
+
+                            </div>
+
+
+                            <div class="form-buttons">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                    Save Place
+                                </button>
+
+                                <button
+                                    type="button"
+                                    id="cancelPlaceBtn"
+                                    class="btn btn-secondary">
+                                    Cancel
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h3>All Places</h3>
+
+                        <div class="admin-filters">
+
+                            <input
+                                type="text"
+                                id="placeSearch"
+                                placeholder="Search places">
+
+                            <select id="placeStatusFilter">
+
+                                <option value="">
+                                    All Status
+                                </option>
+
+                                <option value="published">
+                                    Published
+                                </option>
+
+                                <option value="draft">
+                                    Draft
+                                </option>
+
+                                <option value="archived">
+                                    Archived
+                                </option>
+
+                            </select>
+
+                        </div>
+          </div>
+              
+ <div class="table-container">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Verified</th>
+                                    <th>Actions</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="placesTable">
+
+                                <tr>
+                                    <td colspan="5" class="loading">
+                                        Loading places...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+             <section id="categories" class="admin-section">
+
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h2>Manage Categories</h2>
+
+                    </div>
+
+
+                    <form id="categoryForm" class="admin-form">
+
+                        <input
+                            type="hidden"
+                            id="categoryId">
+
+
+                        <div>
+
+                            <label for="categoryName">
+                                Category Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="categoryName"
+                                required>
+
+                        </div>
+
+                         <div>
+
+                            <label for="categoryStatus">
+                                Status
+                            </label>
+
+                            <select id="categoryStatus">
+
+                                <option value="active">
+                                    Active
+                                </option>
+
+                                <option value="inactive">
+                                    Inactive
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="full">
+
+                            <label for="categoryDescription">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="categoryDescription"></textarea>
+
+                        </div>
+
+ <div>
+
+                            <label for="categoryImage">
+                                Image URL
+                            </label>
+
+                            <input
+                                type="text"
+                                id="categoryImage">
+
+                        </div>
+
+
+                        <div>
+
+                            <label for="categoryIcon">
+                                Icon
+                            </label>
+
+                            <input
+                                type="text"
+                                id="categoryIcon"
+                                placeholder="Optional">
+
+                        </div>
+
+
+                        <div class="form-buttons">
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary">
+                                Save Category
+                            </button>
+
+                            <button
+                                type="button"
+                                id="cancelCategoryBtn"
+                                class="btn btn-secondary">
+                                Cancel
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h3>All Categories</h3>
+
+                    </div>
+
+                    <div class="table-container">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="categoriesTable">
+
+                                <tr>
+                                    <td colspan="4" class="loading">
+                                        Loading categories...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+             <section id="reviews" class="admin-section">
+
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h2>Review Moderation</h2>
+
+                        <div class="admin-filters">
+
+                            <select id="reviewStatusFilter">
+
+                                <option value="">
+                                    All Reviews
+                                </option>
+
+                                <option value="pending">
+                                    Pending
+                                </option>
+
+                                <option value="approved">
+                                    Approved
+                                </option>
+
+                                <option value="rejected">
+                                    Rejected
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>User</th>
+                                    <th>Place</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="reviewsTable">
+
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        Loading reviews...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+<section id="users" class="admin-section">
+
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h2>Manage Users</h2>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="usersTable">
+
+                                <tr>
+                                    <td colspan="5" class="loading">
+                                        Loading users...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+<div id="confirmModal" class="modal">
+
+    <div class="modal-box">
+
+        <h3 id="modalTitle">
+            Confirm Action
+        </h3>
+
+        <p id="modalMessage">
+            Are you sure you want to continue?
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                id="cancelModalBtn"
+                class="btn btn-secondary">
+                Cancel
+            </button>
+
+            <button
+                id="confirmModalBtn"
+                class="btn btn-primary">
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+
+</body>
+</html>
+
+

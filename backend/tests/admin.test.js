@@ -106,5 +106,48 @@ const res = await request(BASE_URL)
 expect(res.status).toBe(200);
 expect(res.body.role).toBe('admin');
 });
+test('an admin can demote another admin back to a regular user', async () => {
+const token = await adminToken();
+const otherAdmin = await User.create({ name: 'Other Admin', email: 'other-admin@test.com', password: 'password123', role: 'admin' });
 
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${otherAdmin._id}/role`)
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'user' });
+
+expect(res.status).toBe(200);
+expect(res.body.role).toBe('user');
+});
+test('an admin cannot remove their own admin access', async () => {
+const admin = await User.create({ name: 'Admin', email: 'self-admin@test.com', password: 'password123', role: 'admin' });
+const login = await request(BASE_URL).post('/api/auth/login').send({ email: 'self-admin@test.com', password: 'password123' });
+
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${admin._id}/role`)
+.set('Authorization', `Bearer ${login.body.token}`)
+.send({ role: 'user' });
+
+expect(res.status).toBe(400);
+});
+test('an invalid role is rejected', async () => {
+const token = await adminToken();
+const regularUser = await User.create({ name: 'Regular', email: 'regular3@test.com', password: 'password123' });
+
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${regularUser._id}/role`)
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'superuser' });
+
+expect(res.status).toBe(400);
+});
+test('a nonexistent user returns 404', async () => {
+const token = await adminToken();
+
+const res = await request(BASE_URL)
+.patch('/api/admin/users/000000000000000000000000/role')
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'admin' });
+
+expect(res.status).toBe(404);
+});
 });
