@@ -129,4 +129,16 @@ const res = await request(BASE_URL)
 
 expect(res.status).toBe(400);
 });
+test('an invalid role is rejected', async () => {
+const token = await adminToken();
+const regularUser = await User.create({ name: 'Regular', email: 'regular3@test.com', password: 'password123' });
+
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${regularUser._id}/role`)
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'superuser' });
+
+expect(res.status).toBe(400);
+});
+
 });
