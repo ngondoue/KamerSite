@@ -118,4 +118,15 @@ const res = await request(BASE_URL)
 expect(res.status).toBe(200);
 expect(res.body.role).toBe('user');
 });
+test('an admin cannot remove their own admin access', async () => {
+const admin = await User.create({ name: 'Admin', email: 'self-admin@test.com', password: 'password123', role: 'admin' });
+const login = await request(BASE_URL).post('/api/auth/login').send({ email: 'self-admin@test.com', password: 'password123' });
+
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${admin._id}/role`)
+.set('Authorization', `Bearer ${login.body.token}`)
+.send({ role: 'user' });
+
+expect(res.status).toBe(400);
+});
 });
