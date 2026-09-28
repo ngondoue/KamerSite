@@ -1,4 +1,4 @@
-// Initialize the profile page when the DOM is ready.
+// Set up the profile page as soon as the page loads.
 document.addEventListener("DOMContentLoaded", () => {
 
     const profilePage = document.querySelector(".profile-page");
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-// Fetch the current user's profile data from the API.
+// Fetch the logged-in user's data from the backend and show it on the page.
 async function loadProfile() {
 
     try {
@@ -46,7 +46,7 @@ async function loadProfile() {
 
 }
 
-// Fill the profile screen with the logged-in user's information.
+// Fill the profile fields with the current user's details.
 function displayProfile(user) {
 
     const avatar = document.getElementById("profile-avatar");
@@ -102,7 +102,7 @@ function displayProfile(user) {
 
 }
 
-// Handle the profile form submission and update the user data.
+// Handle saving the user's updated name and profile image.
 function setupProfileForm() {
 
     const form = document.getElementById("profile-form");
@@ -195,7 +195,7 @@ function setupProfileForm() {
 
 }
 
-// Attach the logout button action for the profile page.
+// Link the logout button to the app's logout logic.
 function setupLogout() {
 
     const button =

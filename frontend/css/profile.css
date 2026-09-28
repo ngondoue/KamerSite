@@ -1,39 +1,31 @@
+/* Profile page and favorites */
+
 .profile-page {
     max-width: 850px;
 }
 
+/* User profile summary */
 .profile-card {
     display: flex;
     align-items: center;
-
     gap: 20px;
-
     padding: 25px;
-
     margin-bottom: 25px;
-
     background: var(--green-50);
-
     border: 1px solid var(--green-100);
-
     border-radius: var(--radius-lg);
 }
 
 .profile-avatar {
     width: 75px;
     height: 75px;
-
     flex-shrink: 0;
-
     border-radius: 50%;
-
     background: var(--green-700);
     color: white;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 1.7rem;
     font-weight: 700;
 }
@@ -44,7 +36,6 @@
 
 .profile-email {
     color: var(--text-muted);
-
     margin-bottom: 10px;
 }
 
@@ -56,19 +47,15 @@
 
 .profile-joined {
     color: var(--text-soft);
-
     font-size: 0.8rem;
 }
 
+/* General profile panels */
 .profile-panel {
     background: white;
-
     border: 1px solid var(--border);
-
     border-radius: var(--radius-lg);
-
     padding: 25px;
-
     margin-bottom: 20px;
 }
 
@@ -78,41 +65,33 @@
 
 .panel-description {
     color: var(--text-muted);
-
     font-size: 0.9rem;
-
     margin-bottom: 20px;
 }
 
+/* Profile form styling */
 .profile-form {
     display: flex;
     flex-direction: column;
-
     gap: 17px;
 }
 
 .form-field {
     display: flex;
     flex-direction: column;
-
     gap: 7px;
 }
 
 .form-field label {
     font-weight: 600;
-
     font-size: 0.9rem;
 }
 
 .form-field input {
     padding: 13px;
-
     border: 1px solid var(--border);
-
     border-radius: 8px;
-
     outline: none;
-
     font-size: 0.95rem;
 }
 
@@ -122,28 +101,79 @@
 
 .form-error {
     padding: 10px;
-
     border-radius: 6px;
-
     background: #fef3f2;
-
     color: #b42318;
-
     font-size: 0.85rem;
 }
 
 .form-success {
     padding: 10px;
-
     border-radius: 6px;
-
     background: #ecfdf3;
-
     color: #067647;
-
     font-size: 0.85rem;
 }
 
+/* Favorite list styles */
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.favorite-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: white;
+}
+
+.favorite-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.favorite-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.favorite-info a {
+    color: var(--green-700);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.favorite-location {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.favorite-remove {
+    border: none;
+    background: transparent;
+    color: #b42318;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.empty-favorites {
+    padding: 18px;
+    background: var(--green-50);
+    border: 1px dashed var(--green-200);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+/* Account section */
 .account-panel {
     margin-bottom: 40px;
 }
@@ -152,8 +182,8 @@
     min-width: 120px;
 }
 
+/* Mobile layout */
 @media (max-width: 600px) {
-
     .profile-card {
         align-items: flex-start;
         flex-direction: column;
@@ -163,5 +193,8 @@
         padding: 20px;
     }
 
+    .favorite-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
-
