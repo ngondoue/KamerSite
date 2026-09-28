@@ -87,4 +87,13 @@ const res = await request(BASE_URL).get('/api/admin/users').set('Authorization',
 expect(res.status).toBe(200);
 expect(res.body.length).toBeGreaterThanOrEqual(2); // the admin + "Someone"
 });
+test('a user cannot promote themselves to admin', async () => {
+const user = await User.create({ name: 'Sneaky', email: 'sneaky@test.com', password: 'password123' });
+const login = await request(BASE_URL).post('/api/auth/login').send({ email: 'sneaky@test.com', password: 'password123' });
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${user._id}/role`)
+.set('Authorization', `Bearer ${login.body.token}`)
+.send({ role: 'admin' });
+expect(res.status).toBe(403);
+});
 });
