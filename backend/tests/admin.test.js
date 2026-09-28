@@ -15,4 +15,11 @@ test('admin routes reject requests with no token (401)', async () => {
     const res = await request(BASE_URL).get('/api/admin/dashboard');
     expect(res.status).toBe(401);
 });
+test('admin routes reject a regular user (403, not 401)', async () => {
+await User.create({ name: 'Regular', email: 'regular@test.com', password: 'password123' });
+const login = await request(BASE_URL).post('/api/auth/login').send({ email: 'regular@test.com', password: 'password123' });
+
+const res = await request(BASE_URL).get('/api/admin/dashboard').set('Authorization', `Bearer ${login.body.token}`);
+expect(res.status).toBe(403);
+});
 });
