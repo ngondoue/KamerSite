@@ -106,5 +106,16 @@ const res = await request(BASE_URL)
 expect(res.status).toBe(200);
 expect(res.body.role).toBe('admin');
 });
+test('an admin can demote another admin back to a regular user', async () => {
+const token = await adminToken();
+const otherAdmin = await User.create({ name: 'Other Admin', email: 'other-admin@test.com', password: 'password123', role: 'admin' });
 
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${otherAdmin._id}/role`)
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'user' });
+
+expect(res.status).toBe(200);
+expect(res.body.role).toBe('user');
+});
 });
