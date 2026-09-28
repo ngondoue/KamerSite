@@ -22,4 +22,11 @@ const login = await request(BASE_URL).post('/api/auth/login').send({ email: 'reg
 const res = await request(BASE_URL).get('/api/admin/dashboard').set('Authorization', `Bearer ${login.body.token}`);
 expect(res.status).toBe(403);
 });
+test('admin routes accept an actual admin', async () => {
+const token = await adminToken();
+const res = await request(BASE_URL).get('/api/admin/dashboard').set('Authorization', `Bearer ${token}`);
+expect(res.status).toBe(200);
+expect(res.body).toHaveProperty('totalPlaces');
+});
+
 });
