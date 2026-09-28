@@ -7,17 +7,13 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Place Details | Yaoundé Gems</title>
+    <title>Place | Yaoundé Gems</title>
 
-    <link
-        rel="stylesheet"
-        href="css/style.css">
-
-    <link
-        rel="stylesheet"
-        href="css/place.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/place.css">
 
 </head>
 
@@ -25,211 +21,60 @@
 
     <div id="site-header"></div>
 
+
     <main>
 
-        <!-- Place Header -->
-        <section class="place-hero">
+        <section class="section container">
 
-            <div class="container">
+            <!-- PLACE HEADER -->
 
-                <a
-                    href="explore.html"
-                    class="back-link">
+            <div class="place-header">
 
-                    ← Back to Explore
+                <div>
 
-                </a>
+                    <a
+                        href="explore.html"
+                        class="back-link"
+                    >
+                        ← Back to Explore
+                    </a>
 
-                <h1 id="place-name">
-                    Place Name
-                </h1>
+                    <h1 id="place-name">
+                        Loading...
+                    </h1>
 
-                <p id="place-location">
-                    Location
-                </p>
+                    <p
+                        id="place-location"
+                        class="place-location"
+                    ></p>
+
+                </div>
+
+
+                <button
+                    id="favorite-button"
+                    class="btn btn-secondary favorite-button"
+                >
+                    ♡ Save Place
+                </button>
 
             </div>
 
-        </section>
 
+            <!-- PLACE IMAGE -->
 
-        <div class="container place-container">
+            <div
+                id="place-gallery"
+                class="place-gallery"
+            >
 
-            <!-- Image and basic information -->
-            <section class="place-top">
+                <img
+                    id="main-place-image"
+                    src=""
+                    alt="Place image"
+                >
 
-                <div class="place-gallery">
-
-                    <button
-                        id="previous-image"
-                        class="gallery-button">
-
-                        ←
-
-                    </button>
-
-                    <img
-                        id="place-image"
-                        src=""
-                        alt="Place image">
-
-                    <button
-                        id="next-image"
-                        class="gallery-button">
-
-                        →
-
-                    </button>
-
-                    <div
-                        id="gallery-dots"
-                        class="gallery-dots">
-                    </div>
-
-                </div>
-
-
-                <div class="place-info">
-
-                    <h2 id="place-title">
-                        Place Name
-                    </h2>
-
-                    <p id="place-description">
-                    </p>
-
-                    <div class="place-facts">
-
-                        <p>
-                            <strong>Location:</strong>
-                            <span id="place-address"></span>
-                        </p>
-
-                        <p>
-                            <strong>Opening Hours:</strong>
-                            <span id="place-hours"></span>
-                        </p>
-
-                        <p>
-                            <strong>Entry Fee:</strong>
-                            <span id="place-fee"></span>
-                        </p>
-
-                        <p>
-                            <strong>Price Range:</strong>
-                            <span id="place-price"></span>
-                        </p>
-
-                        <p>
-                            <strong>Rating:</strong>
-                            <span id="place-rating"></span>
-                        </p>
-
-                    </div>
-
-                    <div class="place-actions">
-
-                        <a
-                            id="directions-button"
-                            href="#"
-                            target="_blank"
-                            class="btn btn-primary">
-
-                            Get Directions
-
-                        </a>
-
-                        <button
-                            id="share-button"
-                            class="btn btn-secondary">
-
-                            Share
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- Place details -->
-            <section class="place-details">
-
-                <div class="details-card">
-
-                    <h2>About</h2>
-
-                    <p id="place-about">
-                    </p>
-
-                </div>
-
-
-                <div class="details-card">
-
-                    <h2>Activities</h2>
-
-                    <div
-                        id="activities-list"
-                        class="simple-list">
-                    </div>
-
-                </div>
-
-
-                <div class="details-card">
-
-                    <h2>Amenities</h2>
-
-                    <div
-                        id="amenities-list"
-                        class="simple-list">
-                    </div>
-
-                </div>
-
-
-                <div class="details-card">
-
-                    <h2>Gallery</h2>
-
-                    <div
-                        id="full-gallery"
-                        class="full-gallery">
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- Nearby places -->
-            <section class="section">
-
-                <div class="section-heading">
-
-                    <h2>Nearby Places</h2>
-
-                </div>
-
-                <div
-                    id="nearby-places"
-                    class="place-grid">
-                </div>
-
-            </section>
-
-        </div>
-
-    </main>
-
-
-    <div id="site-footer"></div>
-
-    <script src="js/main.js"></script>
-    <script src="js/place.js"></script>
+            </div>
 
 </body>
 
