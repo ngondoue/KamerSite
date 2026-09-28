@@ -1,7 +1,4 @@
-/* =========================================
-   USER PROFILE
-========================================= */
-
+// Initialize the profile page when the DOM is ready.
 document.addEventListener("DOMContentLoaded", () => {
 
     const profilePage = document.querySelector(".profile-page");
@@ -27,10 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/* =========================================
-   LOAD PROFILE
-========================================= */
-
+// Fetch the current user's profile data from the API.
 async function loadProfile() {
 
     try {
@@ -52,11 +46,7 @@ async function loadProfile() {
 
 }
 
-
-/* =========================================
-   DISPLAY PROFILE
-========================================= */
-
+// Fill the profile screen with the logged-in user's information.
 function displayProfile(user) {
 
     const avatar = document.getElementById("profile-avatar");
@@ -111,10 +101,8 @@ function displayProfile(user) {
     imageInput.value = user.profileImage || "";
 
 }
-/* =========================================
-   UPDATE PROFILE
-========================================= */
 
+// Handle the profile form submission and update the user data.
 function setupProfileForm() {
 
     const form = document.getElementById("profile-form");
@@ -207,10 +195,7 @@ function setupProfileForm() {
 
 }
 
-/* =========================================
-   LOGOUT
-========================================= */
-
+// Attach the logout button action for the profile page.
 function setupLogout() {
 
     const button =
