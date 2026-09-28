@@ -79,4 +79,12 @@ expect(res.status).toBe(200);
 expect(res.body).toHaveLength(1);
 expect(res.body[0].status).toBe('pending');
 });
+test('GET /api/admin/users lists users', async () => {
+const token = await adminToken();
+await User.create({ name: 'Someone', email: 'someone@test.com', password: 'password123' });
+
+const res = await request(BASE_URL).get('/api/admin/users').set('Authorization', `Bearer ${token}`);
+expect(res.status).toBe(200);
+expect(res.body.length).toBeGreaterThanOrEqual(2); // the admin + "Someone"
+});
 });
