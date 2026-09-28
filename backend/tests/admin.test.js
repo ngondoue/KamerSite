@@ -67,4 +67,44 @@ await Category.create({ name: 'Inactive Category', status: 'inactive' });
 const res = await request(BASE_URL).get('/api/admin/categories').set('Authorization', `Bearer ${token}`);
 expect(res.body.some((c) => c.name === 'Inactive Category')).toBe(true);
 });
+test('GET /api/admin/reviews shows pending reviews', async () => {
+const token = await adminToken();
+const category = await Category.create({ name: 'Restaurants' });
+const place = await Place.create({ name: 'A Place', description: 'x', category: category._id, location: 'x', status: 'published' });
+const user = await User.create({ name: 'Reviewer', email: 'reviewer@test.com', password: 'password123' });
+await Review.create({ user: user._id, place: place._id, rating: 5, status: 'pending' });
+
+const res = await request(BASE_URL).get('/api/admin/reviews').set('Authorization', `Bearer ${token}`);
+expect(res.status).toBe(200);
+expect(res.body).toHaveLength(1);
+expect(res.body[0].status).toBe('pending');
+});
+test('GET /api/admin/users lists users', async () => {
+const token = await adminToken();
+await User.create({ name: 'Someone', email: 'someone@test.com', password: 'password123' });
+
+const res = await request(BASE_URL).get('/api/admin/users').set('Authorization', `Bearer ${token}`);
+expect(res.status).toBe(200);
+expect(res.body.length).toBeGreaterThanOrEqual(2); // the admin + "Someone"
+});
+test('a user cannot promote themselves to admin', async () => {
+const user = await User.create({ name: 'Sneaky', email: 'sneaky@test.com', password: 'password123' });
+const login = await request(BASE_URL).post('/api/auth/login').send({ email: 'sneaky@test.com', password: 'password123' });
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${user._id}/role`)
+.set('Authorization', `Bearer ${login.body.token}`)
+.send({ role: 'admin' });
+expect(res.status).toBe(403);
+});
+test('an admin can promote a regular user', async () => {
+const token = await adminToken();
+const regularUser = await User.create({ name: 'Regular', email: 'regular2@test.com', password: 'password123' });
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${regularUser._id}/role`)
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'admin' });
+expect(res.status).toBe(200);
+expect(res.body.role).toBe('admin');
+});
+
 });
