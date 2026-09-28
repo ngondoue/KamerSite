@@ -548,5 +548,75 @@
                 </div>
 
             </section>
-            
+             <section id="reviews" class="admin-section">
+
+                <div class="admin-panel">
+
+                    <div class="admin-panel-header">
+
+                        <h2>Review Moderation</h2>
+
+                        <div class="admin-filters">
+
+                            <select id="reviewStatusFilter">
+
+                                <option value="">
+                                    All Reviews
+                                </option>
+
+                                <option value="pending">
+                                    Pending
+                                </option>
+
+                                <option value="approved">
+                                    Approved
+                                </option>
+
+                                <option value="rejected">
+                                    Rejected
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>User</th>
+                                    <th>Place</th>
+                                    <th>Rating</th>
+                                    <th>Comment</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="reviewsTable">
+
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        Loading reviews...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
 
