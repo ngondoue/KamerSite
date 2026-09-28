@@ -60,4 +60,11 @@ const res = await request(BASE_URL).get(`/api/admin/places/${place._id}`).set('A
 expect(res.status).toBe(200);
 expect(res.body.name).toBe('Draft Museum');
 });
+test('GET /api/admin/categories shows inactive categories too', async () => {
+const token = await adminToken();
+await Category.create({ name: 'Inactive Category', status: 'inactive' });
+
+const res = await request(BASE_URL).get('/api/admin/categories').set('Authorization', `Bearer ${token}`);
+expect(res.body.some((c) => c.name === 'Inactive Category')).toBe(true);
+});
 });
