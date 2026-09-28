@@ -140,5 +140,14 @@ const res = await request(BASE_URL)
 
 expect(res.status).toBe(400);
 });
+test('a nonexistent user returns 404', async () => {
+const token = await adminToken();
 
+const res = await request(BASE_URL)
+.patch('/api/admin/users/000000000000000000000000/role')
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'admin' });
+
+expect(res.status).toBe(404);
+});
 });
