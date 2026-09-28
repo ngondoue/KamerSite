@@ -96,4 +96,15 @@ const res = await request(BASE_URL)
 .send({ role: 'admin' });
 expect(res.status).toBe(403);
 });
+test('an admin can promote a regular user', async () => {
+const token = await adminToken();
+const regularUser = await User.create({ name: 'Regular', email: 'regular2@test.com', password: 'password123' });
+const res = await request(BASE_URL)
+.patch(`/api/admin/users/${regularUser._id}/role`)
+.set('Authorization', `Bearer ${token}`)
+.send({ role: 'admin' });
+expect(res.status).toBe(200);
+expect(res.body.role).toBe('admin');
+});
+
 });
