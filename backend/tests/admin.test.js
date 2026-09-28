@@ -42,5 +42,13 @@ expect(res.body.totalPlaces).toBe(2);
 expect(res.body.publishedPlaces).toBe(1);
 expect(res.body.draftPlaces).toBe(1);
 });
+test('GET /api/admin/places shows drafts too (unlike the public endpoint)', async () => {
+const token = await adminToken();
 
+const category = await Category.create({ name: 'Parks' });
+await Place.create({ name: 'Draft Place', description: 'x', category: category._id, location: 'x', status: 'draft' });
+const res = await request(BASE_URL).get('/api/admin/places').set('Authorization', `Bearer ${token}`);
+expect(res.body).toHaveLength(1);
+expect(res.body[0].name).toBe('Draft Place');
+});
 });
