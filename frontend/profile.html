@@ -70,6 +70,82 @@
 
             </div>
 
+
+            <!-- Main profile actions and saved content -->
+            <div class="profile-grid">
+
+                <!-- Edit profile form -->
+                <div class="profile-panel">
+
+                    <h2>Edit Profile</h2>
+
+                    <p class="panel-description">
+                        Update your account information.
+                    </p>
+
+
+                    <form
+                        id="profile-form"
+                        class="profile-form"
+                    >
+
+                        <div class="form-field">
+
+                            <label for="profile-name-input">
+                                Full name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profile-name-input"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label for="profile-image-input">
+                                Profile image URL
+                            </label>
+
+                            <input
+                                type="url"
+                                id="profile-image-input"
+                                placeholder="https://example.com/image.jpg"
+                            >
+
+                        </div>
+
+
+                        <p
+                            id="profile-form-error"
+                            class="form-error"
+                            hidden
+                        ></p>
+
+
+                        <p
+                            id="profile-form-success"
+                            class="form-success"
+                            hidden
+                        >
+                            Profile updated successfully.
+                        </p>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+                            Save Changes
+                        </button>
+
+                    </form>
+
+                </div>
+
 </body>
 
 </html>
