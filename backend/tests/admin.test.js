@@ -67,4 +67,16 @@ await Category.create({ name: 'Inactive Category', status: 'inactive' });
 const res = await request(BASE_URL).get('/api/admin/categories').set('Authorization', `Bearer ${token}`);
 expect(res.body.some((c) => c.name === 'Inactive Category')).toBe(true);
 });
+test('GET /api/admin/reviews shows pending reviews', async () => {
+const token = await adminToken();
+const category = await Category.create({ name: 'Restaurants' });
+const place = await Place.create({ name: 'A Place', description: 'x', category: category._id, location: 'x', status: 'published' });
+const user = await User.create({ name: 'Reviewer', email: 'reviewer@test.com', password: 'password123' });
+await Review.create({ user: user._id, place: place._id, rating: 5, status: 'pending' });
+
+const res = await request(BASE_URL).get('/api/admin/reviews').set('Authorization', `Bearer ${token}`);
+expect(res.status).toBe(200);
+expect(res.body).toHaveLength(1);
+expect(res.body[0].status).toBe('pending');
+});
 });
