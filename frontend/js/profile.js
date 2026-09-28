@@ -1,6 +1,4 @@
-/* =========================================
-   USER PROFILE
-========================================= */
+/*USER PROFILE */
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -53,9 +51,7 @@ async function loadProfile() {
 }
 
 
-/* =========================================
-   DISPLAY PROFILE
-========================================= */
+/*DISPLAY PROFILE*/
 
 function displayProfile(user) {
 
@@ -111,9 +107,7 @@ function displayProfile(user) {
     imageInput.value = user.profileImage || "";
 
 }
-/* =========================================
-   UPDATE PROFILE
-========================================= */
+/*UPDATE PROFILE */
 
 function setupProfileForm() {
 
@@ -207,9 +201,7 @@ function setupProfileForm() {
 
 }
 
-/* =========================================
-   LOGOUT
-========================================= */
+/* LOGOUT */
 
 function setupLogout() {
 
