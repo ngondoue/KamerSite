@@ -51,4 +51,13 @@ const res = await request(BASE_URL).get('/api/admin/places').set('Authorization'
 expect(res.body).toHaveLength(1);
 expect(res.body[0].name).toBe('Draft Place');
 });
+test('GET /api/admin/places/:id returns one place regardless of status', async () => {
+const token = await adminToken();
+const category = await Category.create({ name: 'Museums' });
+const place = await Place.create({ name: 'Draft Museum', description: 'x', category: category._id, location: 'x', status: 'draft' });
+
+const res = await request(BASE_URL).get(`/api/admin/places/${place._id}`).set('Authorization', `Bearer ${token}`);
+expect(res.status).toBe(200);
+expect(res.body.name).toBe('Draft Museum');
+});
 });
