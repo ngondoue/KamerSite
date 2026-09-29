@@ -177,3 +177,58 @@
     background: white;
     font-size: 0.85rem;
 }
+.form-container {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.admin-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.admin-form .full {
+    grid-column: 1 / -1;
+}
+
+.admin-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: inherit;
+}
+
+.admin-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.admin-form small {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.form-buttons {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+}
