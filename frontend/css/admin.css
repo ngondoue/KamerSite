@@ -140,3 +140,25 @@
     font-size: 1.7rem;
     color: var(--green-900);
 }
+
+.admin-panel {
+    background: var(--surface);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+}
+
+.admin-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-panel-header h2,
+.admin-panel-header h3 {
+    font-size: 1rem;
+}
