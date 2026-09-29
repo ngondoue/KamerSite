@@ -442,6 +442,75 @@
     justify-content: flex-end;
     gap: 10px;
 }
+@media (max-width: 900px) {
+
+    .admin-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: static;
+        height: auto;
+        padding: 15px;
+    }
+
+    .admin-nav {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .admin-nav-btn {
+        width: auto;
+        white-space: nowrap;
+    }
+
+    .admin-logout {
+        margin-top: 10px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .admin-header {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-content {
+        padding: 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form .full {
+        grid-column: auto;
+    }
+
+    .form-buttons {
+        grid-column: auto;
+        flex-wrap: wrap;
+    }
+
+    .admin-panel {
+        padding: 15px;
+    }
+}
+
 
 
 
