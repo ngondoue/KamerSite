@@ -263,3 +263,77 @@
 .admin-table tr:last-child td {
     border-bottom: none;
 }
+.place-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.place-cell img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--green-50);
+}
+
+.place-name {
+    font-weight: 600;
+}
+
+.place-location {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.place-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.place-cell img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--green-50);
+}
+
+.place-name {
+    font-weight: 600;
+}
+
+.place-location {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.status {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.status-published,
+.status-approved {
+    background: #dff2e4;
+    color: #246b36;
+}
+
+.status-draft,
+.status-pending {
+    background: #fff0cf;
+    color: #87620d;
+}
+
+.status-archived {
+    background: #eeeeee;
+    color: #666;
+}
+
+.status-rejected {
+    background: #f8dddd;
+    color: #9a3030;
+}
+
