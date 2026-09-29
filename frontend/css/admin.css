@@ -336,4 +336,58 @@
     background: #f8dddd;
     color: #9a3030;
 }
+.verified {
+    color: var(--green-700);
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.not-verified {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.btn-small {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.btn-small:hover {
+    opacity: 0.85;
+}
+
+.btn-edit {
+    background: var(--green-100);
+    color: var(--green-800);
+}
+
+.btn-delete {
+    background: #f8dddd;
+    color: #9a3030;
+}
+
+.btn-view {
+    background: #e8eef7;
+    color: #315b89;
+}
+
+.btn-approve {
+    background: var(--green-100);
+    color: var(--green-800);
+}
+
+.btn-reject {
+    background: #fff0cf;
+    color: #87620d;
+}
+
 
