@@ -29,3 +29,36 @@
     font-size: 0.75rem;
     color: #c8d8ce;
 }
+/* NAVIGATION*/
+
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.admin-nav-btn {
+    width: 100%;
+    padding: 11px 12px;
+    border: none;
+    background: transparent;
+    color: #dce8df;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.admin-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-nav-btn.active {
+    background: var(--green-700);
+    color: white;
+}
+
+.admin-logout {
+    margin-top: 30px;
+}
