@@ -162,3 +162,18 @@
 .admin-panel-header h3 {
     font-size: 1rem;
 }
+
+.admin-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-filters input,
+.admin-filters select {
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    font-size: 0.85rem;
+}
