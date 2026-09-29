@@ -1,0 +1,31 @@
+/* ADMIN LAYOUT*/
+
+.admin-shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    background: var(--green-900);
+    color: white;
+    padding: 20px 15px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.admin-brand {
+    padding: 10px;
+    margin-bottom: 25px;
+}
+
+.admin-brand h2 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.admin-brand p {
+    font-size: 0.75rem;
+    color: #c8d8ce;
+}
