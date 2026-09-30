@@ -624,6 +624,458 @@ document.getElementById("placeId").value = "";
 document.getElementById("placePriceRange").value = "$";
 document.getElementById("placeStatus").value = "draft";
 }
+async function loadCategories() {
+
+const table = document.getElementById("categoriesTable");
+
+table.innerHTML = `
+<tr>
+<td colspan="4" class="loading">
+Loading categories...
+</td>
+</tr>
+`;
+
+
+try {
+
+const categories = await apiFetch("/admin/categories");
+
+displayCategories(categories);
+
+} catch (error) {
+
+table.innerHTML = `
+<tr>
+<td colspan="4" class="empty">
+${escapeHtml(error.message)}
+</td>
+</tr>
+`;
+}
+}
+
+
+function displayCategories(categories) {
+
+const table = document.getElementById("categoriesTable");
+
+if (!categories || categories.length === 0) {
+
+table.innerHTML = `
+<tr>
+<td colspan="4" class="empty">
+No categories found.
+</td>
+</tr>
+`;
+
+return;
+}
+
+
+let html = "";
+
+categories.forEach((category) => {
+
+html += `
+<tr>
+
+<td>
+<strong>
+${escapeHtml(category.name)}
+</strong>
+</td>
+
+<td>
+${escapeHtml(
+category.description || "No description"
+)}
+</td>
+
+<td>
+${getStatusBadge(category.status)}
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+class="btn-small btn-edit"
+onclick="editCategory('${category._id}')">
+Edit
+</button>
+
+<button
+class="btn-small btn-delete"
+onclick="confirmDeleteCategory('${category._id}')">
+Delete
+</button>
+
+</div>
+
+</td>
+
+</tr>
+`;
+});
+
+table.innerHTML = html;
+}
+function setupCategoryForm() {
+
+document
+.getElementById("categoryForm")
+.addEventListener("submit", saveCategory);
+
+
+document
+.getElementById("cancelCategoryBtn")
+.addEventListener("click", clearCategoryForm);
+}
+
+
+async function saveCategory(event) {
+
+event.preventDefault();
+
+const categoryId =
+document.getElementById("categoryId").value;
+
+
+const categoryData = {
+
+name:
+document.getElementById("categoryName").value.trim(),
+
+description:
+document
+.getElementById("categoryDescription")
+.value
+.trim(),
+
+image:
+document
+.getElementById("categoryImage")
+.value
+.trim(),
+
+icon:
+document
+.getElementById("categoryIcon")
+.value
+.trim(),
+
+status:
+document.getElementById("categoryStatus").value
+};
+
+
+try {
+
+if (categoryId) {
+
+await apiFetch(`/categories/${categoryId}`, {
+method: "PUT",
+body: JSON.stringify(categoryData)
+});
+
+alert("Category updated successfully.");
+
+} else {
+
+await apiFetch("/categories", {
+method: "POST",
+body: JSON.stringify(categoryData)
+});
+
+alert("Category added successfully.");
+}
+
+
+clearCategoryForm();
+await loadCategories();
+await loadPlaceCategories();
+
+} catch (error) {
+
+alert(error.message || "Could not save category.");
+}
+}
+
+async function editCategory(categoryId) {
+
+try {
+
+const categories =
+await apiFetch("/admin/categories");
+
+const category =
+categories.find(
+(item) => item._id === categoryId
+);
+
+if (!category) {
+alert("Category not found.");
+return;
+}
+
+
+document.getElementById("categoryId").value =
+category._id;
+
+document.getElementById("categoryName").value =
+category.name || "";
+
+document.getElementById("categoryDescription").value =
+category.description || "";
+
+document.getElementById("categoryImage").value =
+category.image || "";
+
+document.getElementById("categoryIcon").value =
+category.icon || "";
+
+document.getElementById("categoryStatus").value =
+category.status || "active";
+
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
+
+} catch (error) {
+
+alert(error.message || "Could not load category.");
+}
+}
+
+function confirmDeleteCategory(categoryId) {
+
+openModal(
+"Delete Category",
+"Are you sure you want to delete this category?",
+async () => {
+
+try {
+
+await apiFetch(`/categories/${categoryId}`, {
+method: "DELETE"
+});
+
+alert("Category deleted successfully.");
+
+await loadCategories();
+await loadPlaceCategories();
+
+} catch (error) {
+
+alert(
+error.message ||
+"Could not delete category."
+);
+}
+}
+);
+}
+
+function clearCategoryForm() {
+
+document.getElementById("categoryForm").reset();
+
+document.getElementById("categoryId").value = "";
+
+document.getElementById("categoryStatus").value =
+"active";
+}
+async function loadReviews() {
+
+const table = document.getElementById("reviewsTable");
+
+table.innerHTML = `
+<tr>
+<td colspan="6" class="loading">
+Loading reviews...
+</td>
+</tr>
+`;
+
+
+try {
+
+const reviews =
+await apiFetch("/admin/reviews");
+
+displayReviews(reviews);
+
+} catch (error) {
+
+table.innerHTML = `
+<tr>
+<td colspan="6" class="empty">
+${escapeHtml(error.message)}
+</td>
+</tr>
+`;
+}
+}
+
+
+function displayReviews(reviews) {
+
+const table =
+document.getElementById("reviewsTable");
+
+const selectedStatus =
+document.getElementById("reviewStatusFilter").value;
+
+
+const filteredReviews =
+reviews.filter((review) => {
+
+if (!selectedStatus) {
+return true;
+}
+
+return review.status === selectedStatus;
+});
+
+
+if (filteredReviews.length === 0) {
+
+table.innerHTML = `
+<tr>
+<td colspan="6" class="empty">
+No reviews found.
+</td>
+</tr>
+`;
+
+return;
+}
+
+
+let html = "";
+
+
+filteredReviews.forEach((review) => {
+
+const userName =
+review.user?.name || "Unknown user";
+
+const placeName =
+review.place?.name || "Unknown place";
+
+
+html += `
+<tr>
+
+<td>
+${escapeHtml(userName)}
+</td>
+
+<td>
+${escapeHtml(placeName)}
+</td>
+
+<td>
+${"★".repeat(review.rating || 0)}
+</td>
+
+<td>
+${escapeHtml(review.comment || "")}
+</td>
+
+<td>
+${getStatusBadge(review.status)}
+</td>
+
+<td>
+
+<div class="actions">
+
+${
+review.status !== "approved"
+? `
+<button
+class="btn-small btn-approve"
+onclick="updateReviewStatus(
+'${review._id}',
+'approved'
+)">
+Approve
+</button>
+`
+: ""
+}
+
+${
+review.status !== "rejected"
+? `
+<button
+class="btn-small btn-reject"
+onclick="updateReviewStatus(
+'${review._id}',
+'rejected'
+)">
+Reject
+</button>
+`
+: ""
+}
+
+<button
+class="btn-small btn-delete"
+onclick="confirmDeleteReview(
+'${review._id}'
+)">
+Delete
+</button>
+
+</div>
+
+</td>
+
+</tr>
+`;
+});
+
+
+table.innerHTML = html;
+}
+async function updateReviewStatus(reviewId, status) {
+
+try {
+
+await apiFetch(`/reviews/${reviewId}`, {
+
+method: "PUT",
+
+body: JSON.stringify({
+status: status
+})
+
+});
+
+alert(`Review ${status}.`);
+
+await loadReviews();
+
+} catch (error) {
+
+alert(
+error.message ||
+"Could not update review."
+);
+}
+}
+
+
+
+
+
 
 
 
