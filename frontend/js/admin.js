@@ -382,4 +382,249 @@ table.innerHTML = html;
 }
 
 
+async function loadPlaceCategories() {
+const select = document.getElementById("placeCategory");
+
+try {
+const categories = await apiFetch("/categories");
+
+select.innerHTML = `
+<option value="">
+Select category
+</option>
+`;
+
+categories.forEach((category) => {
+select.innerHTML += `
+<option value="${category._id}">
+${escapeHtml(category.name)}
+</option>
+`;
+});
+
+} catch (error) {
+console.error("Could not load categories:", error);
+}
+}
+
+function setupPlaceForm() {
+const form = document.getElementById("placeForm");
+
+document
+.getElementById("showPlaceFormBtn")
+.addEventListener("click", () => {
+
+clearPlaceForm();
+
+document
+.getElementById("placeFormContainer")
+.classList.remove("hidden");
+});
+
+
+document
+.getElementById("cancelPlaceBtn")
+.addEventListener("click", () => {
+
+clearPlaceForm();
+
+document
+.getElementById("placeFormContainer")
+.classList.add("hidden");
+});
+
+
+form.addEventListener("submit", savePlace);
+}
+
+
+async function savePlace(event) {
+event.preventDefault();
+
+const placeId = document.getElementById("placeId").value;
+
+const activities = document
+.getElementById("placeActivities")
+.value
+.split(",")
+.map((item) => item.trim())
+.filter(Boolean);
+
+const amenities = document
+.getElementById("placeAmenities")
+.value
+.split(",")
+.map((item) => item.trim())
+.filter(Boolean);
+
+const image = document
+.getElementById("placeImage")
+.value
+.trim();
+
+
+const placeData = {
+name: document.getElementById("placeName").value.trim(),
+
+description:
+document.getElementById("placeDescription").value.trim(),
+
+category:
+document.getElementById("placeCategory").value,
+
+location:
+document.getElementById("placeLocation").value.trim(),
+
+address:
+document.getElementById("placeAddress").value.trim(),
+
+openingHours:
+document.getElementById("placeOpeningHours").value.trim(),
+
+entryFee:
+document.getElementById("placeEntryFee").value.trim(),
+
+priceRange:
+document.getElementById("placePriceRange").value,
+
+activities,
+
+amenities,
+
+images: image ? [image] : [],
+
+status:
+document.getElementById("placeStatus").value
+};
+
+
+try {
+
+if (placeId) {
+
+await apiFetch(`/places/${placeId}`, {
+method: "PUT",
+body: JSON.stringify(placeData)
+});
+
+alert("Place updated successfully.");
+
+} else {
+
+await apiFetch("/places", {
+method: "POST",
+body: JSON.stringify(placeData)
+});
+
+alert("Place added successfully.");
+}
+
+
+clearPlaceForm();
+
+document
+.getElementById("placeFormContainer")
+.classList.add("hidden");
+
+await loadPlaces();
+await loadDashboard();
+
+} catch (error) {
+
+alert(error.message || "Could not save place.");
+}
+}
+async function editPlace(placeId) {
+
+try {
+
+const place = await apiFetch(`/admin/places/${placeId}`);
+
+document.getElementById("placeId").value = place._id;
+document.getElementById("placeName").value = place.name || "";
+document.getElementById("placeDescription").value =
+place.description || "";
+
+document.getElementById("placeCategory").value =
+place.category?._id || place.category || "";
+
+document.getElementById("placeLocation").value =
+place.location || "";
+
+document.getElementById("placeAddress").value =
+place.address || "";
+
+document.getElementById("placeOpeningHours").value =
+place.openingHours || "";
+
+document.getElementById("placeEntryFee").value =
+place.entryFee || "";
+
+document.getElementById("placePriceRange").value =
+place.priceRange || "$";
+
+document.getElementById("placeStatus").value =
+place.status || "draft";
+
+document.getElementById("placeActivities").value =
+(place.activities || []).join(", ");
+
+document.getElementById("placeAmenities").value =
+(place.amenities || []).join(", ");
+
+document.getElementById("placeImage").value =
+place.images?.[0] || "";
+
+
+document
+.getElementById("placeFormContainer")
+.classList.remove("hidden");
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
+
+} catch (error) {
+
+alert(error.message || "Could not load place.");
+}
+}
+
+function confirmDeletePlace(placeId) {
+
+openModal(
+"Delete Place",
+"Are you sure you want to delete this place?",
+async () => {
+
+try {
+
+await apiFetch(`/places/${placeId}`, {
+method: "DELETE"
+});
+
+alert("Place deleted successfully.");
+
+await loadPlaces();
+await loadDashboard();
+
+} catch (error) {
+
+alert(error.message || "Could not delete place.");
+}
+}
+);
+}
+function clearPlaceForm() {
+
+document.getElementById("placeForm").reset();
+document.getElementById("placeId").value = "";
+
+document.getElementById("placePriceRange").value = "$";
+document.getElementById("placeStatus").value = "draft";
+}
+
+
+
 
