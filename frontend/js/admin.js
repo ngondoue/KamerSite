@@ -1226,6 +1226,127 @@ Make Admin
 
 table.innerHTML = html;
 }
+async function changeUserRole(userId, role) {
+
+const message =
+role === "admin"
+? "Make this user an administrator?"
+: "Remove administrator access from this user?";
+
+
+openModal(
+"Change User Role",
+message,
+async () => {
+
+try {
+
+await apiFetch(
+`/admin/users/${userId}/role`,
+{
+method: "PATCH",
+
+body: JSON.stringify({
+role: role
+})
+}
+);
+
+
+alert("User role updated.");
+
+await loadUsers();
+
+} catch (error) {
+
+alert(
+error.message ||
+"Could not update user role."
+);
+}
+}
+);
+}
+function setupFilters() {
+
+document
+.getElementById("placeSearch")
+.addEventListener("input", async () => {
+
+const places =
+await apiFetch("/admin/places");
+
+displayPlaces(places);
+});
+
+
+document
+.getElementById("placeStatusFilter")
+.addEventListener("change", async () => {
+
+const places =
+await apiFetch("/admin/places");
+
+displayPlaces(places);
+});
+
+
+document
+.getElementById("reviewStatusFilter")
+.addEventListener("change", async () => {
+
+await loadReviews();
+});
+}
+
+let modalAction = null;
+
+
+function setupModal() {
+
+document
+.getElementById("cancelModalBtn")
+.addEventListener("click", closeModal);
+
+
+document
+.getElementById("confirmModalBtn")
+.addEventListener("click", async () => {
+
+if (modalAction) {
+await modalAction();
+}
+
+closeModal();
+});
+}
+
+
+function openModal(title, message, action) {
+
+document.getElementById("modalTitle").textContent =
+title;
+
+document.getElementById("modalMessage").textContent =
+message;
+
+modalAction = action;
+
+document
+.getElementById("confirmModal")
+.classList.add("show");
+}
+
+
+function closeModal() {
+
+document
+.getElementById("confirmModal")
+.classList.remove("show");
+
+modalAction = null;
+}
+
 
 
 
