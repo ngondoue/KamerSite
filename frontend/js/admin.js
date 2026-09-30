@@ -65,3 +65,34 @@ await loadUsers();
 });
 });
 }
+
+
+function showSection(sectionName) {
+const sections = document.querySelectorAll(".admin-section");
+const buttons = document.querySelectorAll(".admin-nav-btn");
+
+sections.forEach((section) => {
+section.classList.remove("active");
+});
+
+buttons.forEach((button) => {
+button.classList.remove("active");
+});
+
+const section = document.getElementById(sectionName);
+const button = document.querySelector(
+`.admin-nav-btn[data-section="${sectionName}"]`
+);
+
+if (section) {
+section.classList.add("active");
+}
+
+if (button) {
+button.classList.add("active");
+}
+
+updatePageTitle(sectionName);
+}
+
+
