@@ -95,4 +95,86 @@ button.classList.add("active");
 updatePageTitle(sectionName);
 }
 
+function updatePageTitle(sectionName) {
+const pageTitle = document.getElementById("pageTitle");
+
+const titles = {
+dashboard: "Dashboard",
+places: "Places",
+categories: "Categories",
+reviews: "Reviews",
+users: "Users"
+};
+
+pageTitle.textContent = titles[sectionName] || "Admin Dashboard";
+}
+async function loadAdminInfo() {
+try {
+const user = await apiFetch("/auth/profile");
+
+const adminName = document.getElementById("adminName");
+
+if (adminName) {
+adminName.textContent = user.name || "Admin";
+}
+
+if (user.role !== "admin") {
+alert("You do not have admin access.");
+logout();
+}
+} catch (error) {
+console.error("Could not load admin information:", error);
+logout();
+}
+}
+function setupLogout() {
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", logout);
+}
+
+
+function logout() {
+localStorage.removeItem("kamersite_token");
+localStorage.removeItem("kamersite_user");
+
+window.location.href = "auth.html";
+}
+async function loadDashboard() {
+const dashboardPlaces = document.getElementById("dashboardPlaces");
+
+dashboardPlaces.innerHTML = `
+<div class="loading">
+Loading dashboard...
+</div>
+`;
+
+try {
+const data = await apiFetch("/admin/dashboard");
+
+document.getElementById("totalPlaces").textContent =
+data.totalPlaces || 0;
+
+document.getElementById("publishedPlaces").textContent =
+data.publishedPlaces || 0;
+
+document.getElementById("totalCategories").textContent =
+data.totalCategories || 0;
+
+document.getElementById("totalUsers").textContent =
+data.totalUsers || 0;
+
+const places = await apiFetch("/admin/places");
+
+displayDashboardPlaces(places);
+
+} catch (error) {
+dashboardPlaces.innerHTML = `
+<div class="empty">
+<h3>Unable to load dashboard</h3>
+<p>${error.message}</p>
+</div>
+`;
+}
+}
 
