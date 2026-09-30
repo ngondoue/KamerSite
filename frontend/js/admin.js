@@ -1347,6 +1347,40 @@ document
 modalAction = null;
 }
 
+function getStatusBadge(status) {
+
+if (!status) {
+return "";
+}
+
+return `
+<span class="status status-${status}">
+${escapeHtml(status)}
+</span>
+`;
+}
+function getPlaceImage(place) {
+
+if (place.images && place.images.length > 0) {
+return place.images[0];
+}
+
+return "assets/images/places/default.jpg";
+}
+
+function escapeHtml(value) {
+
+if (value === null || value === undefined) {
+return "";
+}
+
+return String(value)
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;")
+.replace(/"/g, "&quot;")
+.replace(/'/g, "&#039;");
+}
 
 
 
