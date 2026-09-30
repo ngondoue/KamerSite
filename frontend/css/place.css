@@ -1,10 +1,8 @@
 /* Place details page styles */
 
 /* Place header and title */
-.place-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.place-hero {
+    padding: 45px 0 60px;
 
     gap: 20px;
 
@@ -28,8 +26,10 @@
 }
 
 
-.place-location {
-    color: var(--text-muted);
+/* Main content layout */
+.place-container {
+    margin-top: -25px;
+    position: relative;
 }
 
 /* Favorite button */
@@ -42,7 +42,7 @@
     color: var(--green-700);
 }
 
-/* Main gallery */
+/* Gallery layout */
 .place-gallery {
     height: 420px;
 
@@ -127,9 +127,9 @@
 .place-sidebar {
     position: sticky;
 
-    top: 20px;
-}
-
+/* Place information panel */
+.place-info {
+    padding: 25px;
 
 .info-box {
     background: white;
@@ -190,15 +190,11 @@
 }
 
 
-.place-actions .btn {
-    width: 100%;
-
-    justify-content: center;
-}
-
-/* Review section */
-.section-title-row {
-    display: flex;
+/* Details and amenities */
+.place-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 
     justify-content: space-between;
 
@@ -240,51 +236,8 @@
 }
 
 
-#review-form select,
-#review-form textarea {
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 8px;
-
-    background: white;
-
-    font: inherit;
-
-    outline: none;
-}
-
-
-#review-form select:focus,
-#review-form textarea:focus {
-    border-color: var(--green-600);
-}
-
-/* Login prompt for reviews */
-.review-login-message {
-    margin-top: 20px;
-
-    padding: 20px;
-
-    background: var(--green-50);
-
-    border-radius: 10px;
-
-    text-align: center;
-}
-
-
-.review-login-message p {
-    margin-bottom: 12px;
-}
-
-/* Review list styling */
-.reviews-list {
-    margin-top: 20px;
-
+/* Tags and activity chips */
+.simple-list {
     display: flex;
 
     flex-direction: column;
@@ -304,16 +257,11 @@
 }
 
 
-.review-top {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 8px;
+/* Full gallery grid */
+.full-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
 
@@ -322,15 +270,13 @@
 }
 
 
-.review-rating {
-    color: #b7791f;
-
-    font-weight: 700;
+/* Nearby places */
+#nearby-places {
+    margin-top: 20px;
 }
 
-
-.review-comment {
-    color: var(--text-muted);
+/* Responsive styles */
+@media (max-width: 850px) {
 
     line-height: 1.6;
 
