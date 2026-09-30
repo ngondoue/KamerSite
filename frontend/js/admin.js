@@ -178,3 +178,208 @@ dashboardPlaces.innerHTML = `
 }
 }
 
+function displayDashboardPlaces(places) {
+const container = document.getElementById("dashboardPlaces");
+
+if (!places || places.length === 0) {
+container.innerHTML = `
+<div class="empty">
+<h3>No places available</h3>
+<p>Add a place to get started.</p>
+</div>
+`;
+return;
+}
+
+const recentPlaces = places.slice(0, 5);
+
+let html = `
+<div class="table-container">
+<table class="admin-table">
+<thead>
+<tr>
+<th>Place</th>
+<th>Location</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+`;
+
+recentPlaces.forEach((place) => {
+html += `
+<tr>
+<td>
+<div class="place-cell">
+<img
+src="${getPlaceImage(place)}"
+alt="${escapeHtml(place.name)}"
+>
+
+<div>
+<div class="place-name">
+${escapeHtml(place.name)}
+</div>
+</div>
+</div>
+</td>
+
+<td>
+${escapeHtml(place.location || "Not provided")}
+</td>
+
+<td>
+${getStatusBadge(place.status)}
+</td>
+</tr>
+`;
+});
+
+html += `
+</tbody>
+</table>
+</div>
+`;
+
+container.innerHTML = html;
+}
+async function loadPlaces() {
+const table = document.getElementById("placesTable");
+
+table.innerHTML = `
+<tr>
+<td colspan="5" class="loading">
+Loading places...
+</td>
+</tr>
+`;
+
+try {
+const places = await apiFetch("/admin/places");
+
+displayPlaces(places);
+} catch (error) {
+table.innerHTML = `
+<tr>
+<td colspan="5" class="empty">
+${escapeHtml(error.message)}
+</td>
+</tr>
+`;
+}
+}
+
+
+function displayPlaces(places) {
+const table = document.getElementById("placesTable");
+
+const search = document
+.getElementById("placeSearch")
+.value
+.toLowerCase();
+
+const status = document.getElementById("placeStatusFilter").value;
+
+const filteredPlaces = places.filter((place) => {
+
+const matchesSearch =
+place.name.toLowerCase().includes(search) ||
+(place.location || "").toLowerCase().includes(search);
+
+const matchesStatus =
+!status || place.status === status;
+
+return matchesSearch && matchesStatus;
+});
+
+
+if (filteredPlaces.length === 0) {
+table.innerHTML = `
+<tr>
+<td colspan="5" class="empty">
+No places found.
+</td>
+</tr>
+`;
+return;
+}
+
+
+let html = "";
+
+filteredPlaces.forEach((place) => {
+
+const categoryName =
+place.category?.name || "No category";
+
+const verified = place.verification?.verified;
+
+html += `
+<tr>
+
+<td>
+<div class="place-cell">
+
+<img
+src="${getPlaceImage(place)}"
+alt="${escapeHtml(place.name)}"
+>
+
+<div>
+<div class="place-name">
+${escapeHtml(place.name)}
+</div>
+
+<div class="place-location">
+${escapeHtml(place.location || "")}
+</div>
+</div>
+
+</div>
+</td>
+
+<td>
+${escapeHtml(categoryName)}
+</td>
+
+<td>
+${getStatusBadge(place.status)}
+</td>
+
+<td>
+${
+verified
+? `<span class="verified">Verified</span>`
+: `<span class="not-verified">Not verified</span>`
+}
+</td>
+
+<td>
+
+<div class="actions">
+
+<button
+class="btn-small btn-edit"
+onclick="editPlace('${place._id}')">
+Edit
+</button>
+
+<button
+class="btn-small btn-delete"
+onclick="confirmDeletePlace('${place._id}')">
+Delete
+</button>
+
+</div>
+
+</td>
+
+</tr>
+`;
+});
+
+table.innerHTML = html;
+}
+
+
+
