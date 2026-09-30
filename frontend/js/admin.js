@@ -1073,6 +1073,159 @@ error.message ||
 }
 
 
+function confirmDeleteReview(reviewId) {
+
+openModal(
+"Delete Review",
+"Are you sure you want to delete this review?",
+async () => {
+
+try {
+
+await apiFetch(`/reviews/${reviewId}`, {
+method: "DELETE"
+});
+
+alert("Review deleted successfully.");
+
+await loadReviews();
+
+} catch (error) {
+
+alert(
+error.message ||
+"Could not delete review."
+);
+}
+}
+);
+}
+
+async function loadUsers() {
+
+const table =
+document.getElementById("usersTable");
+
+
+table.innerHTML = `
+<tr>
+<td colspan="5" class="loading">
+Loading users...
+</td>
+</tr>
+`;
+
+
+try {
+
+const users =
+await apiFetch("/admin/users");
+
+displayUsers(users);
+
+} catch (error) {
+
+table.innerHTML = `
+<tr>
+<td colspan="5" class="empty">
+${escapeHtml(error.message)}
+</td>
+</tr>
+`;
+}
+}
+
+
+function displayUsers(users) {
+
+const table =
+document.getElementById("usersTable");
+
+
+if (!users || users.length === 0) {
+
+table.innerHTML = `
+<tr>
+<td colspan="5" class="empty">
+No users found.
+</td>
+</tr>
+`;
+
+return;
+}
+
+
+let html = "";
+
+
+users.forEach((user) => {
+
+const joined =
+user.createdAt
+? new Date(user.createdAt)
+.toLocaleDateString()
+: "Unknown";
+
+
+html += `
+<tr>
+
+<td>
+${escapeHtml(user.name)}
+</td>
+
+<td>
+${escapeHtml(user.email)}
+</td>
+
+<td>
+${escapeHtml(user.role)}
+</td>
+
+<td>
+${joined}
+</td>
+
+<td>
+
+<div class="actions">
+
+${
+user.role === "admin"
+? `
+<button
+class="btn-small btn-view"
+onclick="changeUserRole(
+'${user._id}',
+'user'
+)">
+Make User
+</button>
+`
+: `
+<button
+class="btn-small btn-edit"
+onclick="changeUserRole(
+'${user._id}',
+'admin'
+)">
+Make Admin
+</button>
+`
+}
+
+</div>
+
+</td>
+
+</tr>
+`;
+});
+
+
+table.innerHTML = html;
+}
 
 
 
