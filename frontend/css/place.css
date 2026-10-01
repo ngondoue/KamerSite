@@ -4,35 +4,25 @@
 .place-hero {
     padding: 45px 0 60px;
 
-    background:
-        linear-gradient(
-            rgba(248, 246, 239, 0.3),
-            rgba(248, 246, 239, 0.9)
-        ),
-        url("https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600&q=80");
+    gap: 20px;
 
-    background-size: cover;
-    background-position: center;
+    margin-bottom: 25px;
 }
+
 
 .back-link {
     display: inline-block;
-    margin-bottom: 20px;
 
-    padding: 7px 14px;
+    margin-bottom: 12px;
 
-    background: white;
-    border-radius: var(--radius-pill);
+    color: var(--green-700);
 
-    font-weight: bold;
+    font-size: 0.9rem;
 }
 
-.place-hero h1 {
-    font-size: 2.4rem;
-}
 
-.place-hero p {
-    color: var(--text-muted);
+.place-header h1 {
+    margin-bottom: 6px;
 }
 
 
@@ -42,110 +32,161 @@
     position: relative;
 }
 
-.place-top {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 20px;
+/* Favorite button */
+.favorite-button {
+    white-space: nowrap;
 }
 
+.favorite-button.saved {
+    background: var(--green-100);
+    color: var(--green-700);
+}
 
 /* Gallery layout */
 .place-gallery {
-    position: relative;
+    height: 420px;
 
-    background: var(--green-light);
-
-    border-radius: var(--radius);
     overflow: hidden;
 
-    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+
+    margin-bottom: 30px;
+
+    background: var(--green-50);
 }
+
 
 .place-gallery img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
-.gallery-button {
-    position: absolute;
-    top: 50%;
+/* Main content layout */
+.place-layout {
+    display: grid;
 
-    width: 35px;
-    height: 35px;
+    grid-template-columns: 1fr 300px;
 
-    transform: translateY(-50%);
+    gap: 25px;
 
-    border: none;
-    border-radius: 50%;
+    align-items: start;
+}
 
+
+.place-card-section {
     background: white;
 
-    z-index: 2;
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 25px;
+
+    margin-bottom: 20px;
 }
 
-#previous-image {
-    left: 12px;
+
+.place-card-section h2 {
+    margin-bottom: 10px;
 }
 
-#next-image {
-    right: 12px;
+
+.place-card-section > p {
+    color: var(--text-muted);
+
+    line-height: 1.7;
 }
 
-.gallery-dots {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
+/* Tags and detail chips */
+.tag-list {
     display: flex;
-    gap: 5px;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 15px;
 }
 
-.gallery-dot {
-    width: 8px;
-    height: 8px;
 
-    border: none;
-    border-radius: 50%;
+.place-tag {
+    background: var(--green-50);
 
-    background: white;
+    color: var(--green-700);
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 0.8rem;
 }
 
+/* Sidebar information */
+.place-sidebar {
+    position: sticky;
 
 /* Place information panel */
 .place-info {
     padding: 25px;
 
+.info-box {
     background: white;
-    border-radius: var(--radius);
 
-    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 20px;
 }
 
-.place-info h2 {
+
+.info-box h3 {
     margin-bottom: 15px;
 }
 
-.place-facts {
+
+.info-item {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
 
-    margin-top: 20px;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 0.85rem;
 }
 
-.place-facts p {
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+
+.info-item strong {
+    color: var(--text);
+}
+
+
+.info-item span {
     color: var(--text-muted);
+
+    text-align: right;
 }
+
 
 .place-actions {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
 
-    margin-top: 20px;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-top: 15px;
 }
 
 
@@ -155,34 +196,64 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 
-    margin-top: 30px;
+    justify-content: space-between;
+
+    gap: 15px;
 }
 
-.details-card h2 {
+
+.section-description {
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+
+    margin-top: 4px;
+}
+
+
+.review-form-container {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    background: var(--green-50);
+
+    border-radius: 10px;
+}
+
+
+.review-form-container h3 {
     margin-bottom: 15px;
 }
 
-.details-card p {
-    color: var(--text-muted);
+
+#review-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
 }
 
 
 /* Tags and activity chips */
 .simple-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+
+    flex-direction: column;
+
+    gap: 15px;
 }
 
-.simple-list span {
-    padding: 7px 12px;
 
-    background: var(--green-light);
-    color: var(--green-dark);
+.review-card {
+    padding: 18px;
 
-    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
 
-    font-size: 0.85rem;
+    border-radius: 10px;
+
+    background: white;
 }
 
 
@@ -193,12 +264,9 @@
     gap: 10px;
 }
 
-.full-gallery img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
 
-    border-radius: var(--radius-small);
+.review-user {
+    font-weight: 700;
 }
 
 
@@ -210,25 +278,55 @@
 /* Responsive styles */
 @media (max-width: 850px) {
 
-    .place-top {
-        grid-template-columns: 1fr;
-    }
+    line-height: 1.6;
 
-    .place-details {
-        grid-template-columns: 1fr;
-    }
-
+    margin-bottom: 10px;
 }
 
 
-@media (max-width: 550px) {
+.review-date {
+    color: var(--text-soft);
 
-    .place-hero h1 {
-        font-size: 2rem;
+    font-size: 0.75rem;
+}
+
+
+.review-delete {
+    border: none;
+
+    background: none;
+
+    color: #b42318;
+
+    cursor: pointer;
+
+    font-size: 0.8rem;
+
+    margin-top: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 800px) {
+
+    .place-header {
+        align-items: flex-start;
+
+        flex-direction: column;
     }
 
-    .full-gallery {
-        grid-template-columns: repeat(2, 1fr);
+
+    .place-layout {
+        grid-template-columns: 1fr;
+    }
+
+
+    .place-sidebar {
+        position: static;
+    }
+
+
+    .place-gallery {
+        height: 280px;
     }
 
 }
