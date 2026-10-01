@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "api/";
 
 
 /* Session helpers -- shared by every page that loads main.js */
