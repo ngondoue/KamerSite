@@ -162,10 +162,57 @@ router.get("/:id/nearby", async (req, res) => {
     }
 });
 
+// Fields an admin is allowed to set directly. Anything else in the
+// request body (in particular rating, reviewCount, and the raw
+// verification object) is silently dropped: rating/reviewCount must
+// only ever come from real approved reviews (see api/reviews.js), and
+// verification is only changed through the "verified" flag below,
+// which records who verified it and when using the logged-in admin --
+// never whatever the client sends.
+function buildPlaceData(body, adminId) {
+    const allowedFields = [
+        "name",
+        "description",
+        "category",
+        "location",
+        "address",
+        "coordinates",
+        "openingHours",
+        "entryFee",
+        "priceRange",
+        "activities",
+        "amenities",
+        "contact",
+        "images",
+        "status"
+    ];
+
+    const data = {};
+
+    for (const field of allowedFields) {
+        if (body[field] !== undefined) {
+            data[field] = body[field];
+        }
+    }
+
+    if (body.verified !== undefined) {
+        data.verification = {
+            verified: Boolean(body.verified),
+            verifiedAt: body.verified ? new Date() : null,
+            verifiedBy: body.verified ? adminId : null
+        };
+    }
+
+    return data;
+}
+
+
 // add a place
 router.post("/", protect, requireAdmin, async (req, res) => {
     try {
-        const place = await Place.create(req.body);
+        const data = buildPlaceData(req.body, req.user._id);
+
+        const place = await Place.create(data);
 
         res.status(201).json(place);
 
@@ -180,9 +227,11 @@ router.post("/", protect, requireAdmin, async (req, res) => {
  // update a place
 router.put("/:id", protect, requireAdmin, async (req, res) => {
     try {
+        const data = buildPlaceData(req.body, req.user._id);
+
         const place = await Place.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            data,
             {
                 new: true,
                 runValidators: true
