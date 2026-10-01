@@ -1,9 +1,54 @@
 const API_URL = "http://localhost:5000/api";
 
 
+/* Session helpers -- shared by every page that loads main.js */
+
+function getToken() {
+    return localStorage.getItem("kamersite_token");
+}
+
+function getCurrentUser() {
+    const raw = localStorage.getItem("kamersite_user");
+    return raw ? JSON.parse(raw) : null;
+}
+
+function isLoggedIn() {
+    return Boolean(getToken());
+}
+
+function saveSession(user, token) {
+    localStorage.setItem("kamersite_token", token);
+    localStorage.setItem("kamersite_user", JSON.stringify(user));
+}
+
+function logout() {
+    localStorage.removeItem("kamersite_token");
+    localStorage.removeItem("kamersite_user");
+    window.location.href = "auth.html";
+}
+
+
 async function apiFetch(endpoint, options = {}) {
 
-    const response = await fetch(API_URL + endpoint, options);
+    const headers = { ...(options.headers || {}) };
+
+    // fetch() does NOT set this automatically for a string body -- without
+    // it, express.json() on the backend never parses the body, and every
+    // POST/PUT would silently arrive as an empty object.
+    if (options.body && !headers["Content-Type"]) {
+        headers["Content-Type"] = "application/json";
+    }
+
+    const token = getToken();
+
+    if (token && !headers["Authorization"]) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(API_URL + endpoint, {
+        ...options,
+        headers
+    });
 
     const data = await response.json();
 
@@ -21,6 +66,26 @@ function loadHeader() {
     const header = document.getElementById("site-header");
 
     if (!header) return;
+
+    const user = getCurrentUser();
+
+    const accountLinks = isLoggedIn()
+        ? `
+            <a href="profile.html">
+                ${escapeHtml(user?.name || "Profile")}
+            </a>
+
+            ${user?.role === "admin" ? `<a href="admin.html">Admin</a>` : ""}
+
+            <a href="#" id="nav-logout-link">
+                Logout
+            </a>
+        `
+        : `
+            <a href="auth.html">
+                Login
+            </a>
+        `;
 
     header.innerHTML = `
         <header class="site-header">
@@ -41,9 +106,7 @@ function loadHeader() {
                         Explore
                     </a>
 
-                    <a href="auth.html">
-                        Login
-                    </a>
+                    ${accountLinks}
 
                 </nav>
 
@@ -67,6 +130,17 @@ function loadHeader() {
 
         toggle.addEventListener("click", () => {
             links.classList.toggle("open");
+        });
+
+    }
+
+    const logoutLink = document.getElementById("nav-logout-link");
+
+    if (logoutLink) {
+
+        logoutLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            logout();
         });
 
     }

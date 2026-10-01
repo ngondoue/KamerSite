@@ -3,7 +3,7 @@ import express from "express";
 import User from "../models/User.js";
 import Place from "../models/Place.js";
 import Category from "../models/Category.js";
-import Review from "../models/Review.js";
+import Review from "../models/Reviews.js";
 
 import { protect, requireAdmin } from "../middleware/auth.js";
 

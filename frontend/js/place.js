@@ -95,6 +95,233 @@ function displayPlace(place) {
 
     setupShare();
 
+    setupFavoriteButton(place);
+
+    loadReviews(place._id);
+
+    setupReviewForm(place._id);
+
+}
+
+
+/* FAVORITES */
+
+async function setupFavoriteButton(place) {
+
+    const button = document.getElementById("favorite-button");
+
+    if (!button) return;
+
+    let isFavorited = false;
+
+    if (isLoggedIn()) {
+
+        try {
+
+            const favorites = await apiFetch("/favorites");
+
+            isFavorited = favorites.some(
+                (favorite) => favorite.place && favorite.place._id === place._id
+            );
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    }
+
+    updateFavoriteButton(button, isFavorited);
+
+    button.addEventListener("click", async function () {
+
+        if (!isLoggedIn()) {
+            window.location.href = "auth.html";
+            return;
+        }
+
+        button.disabled = true;
+
+        try {
+
+            if (isFavorited) {
+
+                await apiFetch(`/favorites/${place._id}`, {
+                    method: "DELETE"
+                });
+
+                isFavorited = false;
+
+            } else {
+
+                await apiFetch("/favorites", {
+                    method: "POST",
+                    body: JSON.stringify({ placeId: place._id })
+                });
+
+                isFavorited = true;
+
+            }
+
+            updateFavoriteButton(button, isFavorited);
+
+        } catch (error) {
+
+            alert(error.message || "Could not update favorites.");
+
+        }
+
+        button.disabled = false;
+
+    });
+
+}
+
+
+function updateFavoriteButton(button, isFavorited) {
+
+    button.textContent = isFavorited ? "♥ Saved" : "♡ Save Place";
+    button.classList.toggle("active", isFavorited);
+
+}
+
+
+/* REVIEWS */
+
+async function loadReviews(placeId) {
+
+    const container = document.getElementById("reviews-list");
+
+    if (!container) return;
+
+    try {
+
+        const reviews = await apiFetch(`/reviews/place/${placeId}`);
+
+        renderReviews(reviews);
+
+    } catch (error) {
+
+        container.innerHTML =
+            "<p class='message'>Could not load reviews.</p>";
+
+    }
+
+}
+
+
+function renderReviews(reviews) {
+
+    const container = document.getElementById("reviews-list");
+
+    if (!reviews || reviews.length === 0) {
+
+        container.innerHTML =
+            "<p class='message'>No reviews yet. Be the first to review this place.</p>";
+
+        return;
+    }
+
+    container.innerHTML = reviews.map((review) => {
+
+        const authorName = review.user?.name || "Anonymous";
+
+        const date = review.createdAt
+            ? new Date(review.createdAt).toLocaleDateString()
+            : "";
+
+        return `
+            <div class="review-card">
+                <div class="review-card-header">
+                    <strong>${escapeHtml(authorName)}</strong>
+                    <span class="review-rating">${"★".repeat(review.rating || 0)}</span>
+                </div>
+                <p class="review-date">${escapeHtml(date)}</p>
+                <p class="review-comment">${escapeHtml(review.comment || "")}</p>
+            </div>
+        `;
+
+    }).join("");
+
+}
+
+
+function setupReviewForm(placeId) {
+
+    const formContainer = document.getElementById("review-form-container");
+    const loginMessage = document.getElementById("review-login-message");
+    const form = document.getElementById("review-form");
+
+    if (!form) return;
+
+    if (isLoggedIn()) {
+        formContainer.hidden = false;
+        loginMessage.hidden = true;
+    } else {
+        formContainer.hidden = true;
+        loginMessage.hidden = false;
+        return;
+    }
+
+    form.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const error = document.getElementById("review-form-error");
+        const success = document.getElementById("review-form-success");
+        const button = document.getElementById("review-submit");
+
+        error.hidden = true;
+        success.hidden = true;
+
+        const rating = Number(
+            document.getElementById("review-rating").value
+        );
+
+        const comment = document
+            .getElementById("review-comment")
+            .value
+            .trim();
+
+        if (!rating) {
+            error.textContent = "Please select a rating.";
+            error.hidden = false;
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = "Submitting...";
+
+        try {
+
+            await apiFetch("/reviews", {
+                method: "POST",
+                body: JSON.stringify({
+                    place: placeId,
+                    rating,
+                    comment
+                })
+            });
+
+            success.textContent =
+                "Thanks! Your review was submitted and is awaiting approval.";
+            success.hidden = false;
+
+            form.reset();
+
+        } catch (err) {
+
+            error.textContent = err.message;
+            error.hidden = false;
+
+        }
+
+        button.disabled = false;
+        button.textContent = "Submit Review";
+
+    });
+
 }
 
 

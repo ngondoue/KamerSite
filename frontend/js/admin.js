@@ -1,4 +1,4 @@
-doocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 if (!isLoggedIn()) {
 window.location.href = "auth.html";
 return;
@@ -110,7 +110,7 @@ pageTitle.textContent = titles[sectionName] || "Admin Dashboard";
 }
 async function loadAdminInfo() {
 try {
-const user = await apiFetch("/auth/profile");
+const { user } = await apiFetch("/auth/profile");
 
 const adminName = document.getElementById("adminName");
 
@@ -159,10 +159,10 @@ document.getElementById("publishedPlaces").textContent =
 data.publishedPlaces || 0;
 
 document.getElementById("totalCategories").textContent =
-data.totalCategories || 0;
+data.categories || 0;
 
 document.getElementById("totalUsers").textContent =
-data.totalUsers || 0;
+data.users || 0;
 
 const places = await apiFetch("/admin/places");
 
