@@ -44,19 +44,11 @@ function displayPlace(place) {
     ).textContent = place.name;
 
     document.getElementById(
-        "place-title"
-    ).textContent = place.name;
-
-    document.getElementById(
         "place-location"
     ).textContent = place.location;
 
     document.getElementById(
         "place-description"
-    ).textContent = place.description;
-
-    document.getElementById(
-        "place-about"
     ).textContent = place.description;
 
     document.getElementById(
@@ -77,7 +69,7 @@ function displayPlace(place) {
     document.getElementById(
         "place-price"
     ).textContent =
-        place.priceRange || "-";
+        formatPriceRange(place.priceRange);
 
     document.getElementById(
         "place-rating"
@@ -101,6 +93,19 @@ function displayPlace(place) {
 
     setupReviewForm(place._id);
 
+}
+
+
+function formatPriceRange(priceRange) {
+
+    const labels = {
+        "$": "Budget",
+        "$$": "Moderate",
+        "$$$": "Expensive",
+        "$$$$": "Premium"
+    };
+
+    return labels[priceRange] || "-";
 }
 
 
@@ -328,7 +333,7 @@ function setupReviewForm(placeId) {
 function renderActivities(activities) {
 
     const container =
-        document.getElementById("activities-list");
+        document.getElementById("place-activities");
 
     if (!activities || activities.length === 0) {
 
@@ -356,7 +361,7 @@ function renderActivities(activities) {
 function renderAmenities(amenities) {
 
     const container =
-        document.getElementById("amenities-list");
+        document.getElementById("place-amenities");
 
     if (!amenities || amenities.length === 0) {
 
@@ -384,129 +389,25 @@ function renderAmenities(amenities) {
 function renderGallery(images) {
 
     const image =
-        document.getElementById("place-image");
+        document.getElementById("main-place-image");
 
-    const gallery =
-        document.getElementById("full-gallery");
-
-    const dots =
-        document.getElementById("gallery-dots");
-
+    if (!image) return;
 
     if (!images || images.length === 0) {
 
         image.src =
-            "https://via.placeholder.com/800x600?text=No+Image";
+            "https://via.placeholder.com/800x600?text=KamerSite";
 
-        gallery.innerHTML =
-            "<p>No images available.</p>";
+        image.alt = "No image available";
 
         return;
 
     }
 
-
     currentImage = 0;
 
-    showImage();
-
-
-    gallery.innerHTML =
-        images.map(imageUrl => {
-
-            return `
-                <img
-                    src="${imageUrl}"
-                    alt="${escapeHtml(currentPlace.name)}">
-            `;
-
-        }).join("");
-
-
-    dots.innerHTML =
-        images.map((imageUrl, index) => {
-
-            return `
-                <button
-                    class="gallery-dot"
-                    data-index="${index}">
-                </button>
-            `;
-
-        }).join("");
-
-
-    document
-        .querySelectorAll(".gallery-dot")
-        .forEach(button => {
-
-            button.addEventListener("click", function () {
-
-                currentImage =
-                    Number(this.dataset.index);
-
-                showImage();
-
-            });
-
-        });
-
-
-    document
-        .getElementById("previous-image")
-        .addEventListener("click", function () {
-
-            currentImage--;
-
-            if (currentImage < 0) {
-                currentImage = images.length - 1;
-            }
-
-            showImage();
-
-        });
-
-
-    document
-        .getElementById("next-image")
-        .addEventListener("click", function () {
-
-            currentImage++;
-
-            if (currentImage >= images.length) {
-                currentImage = 0;
-            }
-
-            showImage();
-
-        });
-
-}
-
-
-function showImage() {
-
-    const images =
-        currentPlace.images || [];
-
-    if (images.length === 0) return;
-
-
-    document.getElementById(
-        "place-image"
-    ).src = images[currentImage];
-
-
-    document
-        .querySelectorAll(".gallery-dot")
-        .forEach((dot, index) => {
-
-            dot.classList.toggle(
-                "active",
-                index === currentImage
-            );
-
-        });
+    image.src = images[0];
+    image.alt = currentPlace.name;
 
 }
 
@@ -514,7 +415,7 @@ function showImage() {
 function setupDirections(place) {
 
     const button =
-        document.getElementById("directions-button");
+        document.getElementById("directions-link");
 
 
     if (
@@ -539,7 +440,9 @@ function setupDirections(place) {
 function setupShare() {
 
     const button =
-        document.getElementById("share-button");
+        document.getElementById("share-place");
+
+    if (!button) return;
 
 
     button.addEventListener("click", async function () {
@@ -571,6 +474,10 @@ async function loadNearbyPlaces(placeId) {
 
     const container =
         document.getElementById("nearby-places");
+
+    // No "nearby places" section exists on this page yet -- skip quietly
+    // instead of crashing if it's ever added without updating this guard.
+    if (!container) return;
 
     try {
 

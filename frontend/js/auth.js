@@ -35,7 +35,7 @@ function setupAuthSwitch() {
             "Create your account";
 
         document.getElementById("auth-form-subtitle").textContent =
-            "Join Yaoundé Gems and start exploring";
+            "Join KamerSite and start exploring";
 
     });
 
@@ -49,7 +49,7 @@ function setupAuthSwitch() {
             "Welcome back";
 
         document.getElementById("auth-form-subtitle").textContent =
-            "Login to your Yaoundé Gems account";
+            "Login to your KamerSite account";
 
     });
 

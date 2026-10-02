@@ -43,15 +43,13 @@ const categorySchema = new mongoose.Schema(
 );
 
 
-categorySchema.pre("validate", function (next) {
+categorySchema.pre("validate", function () {
     if (this.isModified("name") || !this.slug) {
         this.slug = slugify(this.name, {
             lower: true,
             strict: true
         });
     }
-
-    next();
 });
 
 
