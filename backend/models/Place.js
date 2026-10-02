@@ -132,7 +132,7 @@ const placeSchema = new mongoose.Schema(
 
 
 // Create slug from place name
-placeSchema.pre("validate", async function (next) {
+placeSchema.pre("validate", async function () {
     if (this.isModified("name") || !this.slug) {
         const baseSlug = slugify(this.name, {
             lower: true,
@@ -155,7 +155,6 @@ placeSchema.pre("validate", async function (next) {
         this.slug = slug;
     }
 
-    next();
 });
 
 
