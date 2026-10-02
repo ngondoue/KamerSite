@@ -484,9 +484,6 @@ document.getElementById("placeOpeningHours").value.trim(),
 entryFee:
 document.getElementById("placeEntryFee").value.trim(),
 
-priceRange:
-document.getElementById("placePriceRange").value,
-
 activities,
 
 amenities,
@@ -560,9 +557,6 @@ place.openingHours || "";
 document.getElementById("placeEntryFee").value =
 place.entryFee || "";
 
-document.getElementById("placePriceRange").value =
-place.priceRange || "$";
-
 document.getElementById("placeStatus").value =
 place.status || "draft";
 
@@ -621,7 +615,6 @@ function clearPlaceForm() {
 document.getElementById("placeForm").reset();
 document.getElementById("placeId").value = "";
 
-document.getElementById("placePriceRange").value = "$";
 document.getElementById("placeStatus").value = "draft";
 }
 async function loadCategories() {
@@ -981,7 +974,7 @@ ${escapeHtml(placeName)}
 </td>
 
 <td>
-${"★".repeat(review.rating || 0)}
+${'<i class="bx bxs-star"></i>'.repeat(review.rating || 0)}
 </td>
 
 <td>

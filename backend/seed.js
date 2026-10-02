@@ -99,37 +99,40 @@ async function createCategories() {
         {
             name: "Restaurants",
             description: "Great places to eat, from local food to fine dining.",
-            icon: "🍽️",
+            // Icon is a Font Awesome class string (site loads Font Awesome
+            // via CDN) rather than an emoji, so it renders consistently
+            // across devices/browsers instead of relying on the OS's emoji font.
+            icon: "fa-solid fa-utensils",
             status: "active"
         },
         {
             name: "Cafés",
             description: "Coffee shops and relaxed spots to work or chat.",
-            icon: "☕",
+            icon: "fa-solid fa-mug-saucer",
             status: "active"
         },
         {
             name: "Nature",
             description: "Parks, hills, and other outdoor green spaces.",
-            icon: "🌳",
+            icon: "fa-solid fa-tree",
             status: "active"
         },
         {
             name: "Entertainment",
             description: "Cinemas, shows and other fun activities.",
-            icon: "🎬",
+            icon: "fa-solid fa-film",
             status: "active"
         },
         {
             name: "Shopping",
             description: "Markets, malls and boutiques around the city.",
-            icon: "🛍️",
+            icon: "fa-solid fa-bag-shopping",
             status: "active"
         },
         {
             name: "Accommodation",
             description: "Hotels and guesthouses to stay the night.",
-            icon: "🏨",
+            icon: "fa-solid fa-bed",
             status: "active"
         }
     ];

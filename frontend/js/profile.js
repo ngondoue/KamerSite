@@ -275,12 +275,12 @@ function renderFavoriteCard(favorite) {
                 </a>
 
                 <span class="favorite-location">
-                    📍 ${escapeHtml(place.location || "")}
+                    <i class="bx bxs-map-pin"></i> ${escapeHtml(place.location || "")}
                 </span>
 
                 <div class="favorite-meta">
                     <span class="favorite-price">${escapeHtml(priceLabel)}</span>
-                    <span class="favorite-rating">★ ${rating}</span>
+                    <span class="favorite-rating"><i class="bx bxs-star"></i> ${rating}</span>
                 </div>
 
             </div>
@@ -289,7 +289,7 @@ function renderFavoriteCard(favorite) {
                 class="favorite-remove"
                 data-place-id="${place._id}"
                 title="Remove from favorites">
-                ✕
+                <i class="bx bx-x"></i>
             </button>
 
         </div>

@@ -93,7 +93,7 @@ function loadHeader() {
             <div class="container navbar">
 
                 <a href="index.html" class="brand">
-                    📍 KamerSite
+                    <i class="bx bxs-map-pin"></i> KamerSite
                 </a>
 
                 <nav class="nav-links" id="nav-links">
@@ -114,7 +114,7 @@ function loadHeader() {
                     class="nav-toggle"
                     id="nav-toggle">
 
-                    ☰
+                    <i class="bx bx-menu"></i>
 
                 </button>
 
@@ -161,7 +161,7 @@ function loadFooter() {
             <div class="container footer-inner">
 
                 <div>
-                    <strong>📍 KamerSite</strong>
+                    <strong><i class="bx bxs-map-pin"></i> KamerSite</strong>
 
                     <p>
                         Discover amazing places around Yaoundé.
@@ -248,7 +248,7 @@ function renderPlaceCards(elementId, places) {
                     </span>
 
                     <span class="place-card-favorite" aria-hidden="true">
-                        ♡
+                        <i class="bx bx-heart"></i>
                     </span>
 
                 </div>
@@ -260,7 +260,7 @@ function renderPlaceCards(elementId, places) {
                     </h3>
 
                     <p>
-                        📍 ${escapeHtml(place.location)}
+                        <i class="bx bxs-map-pin"></i> ${escapeHtml(place.location)}
                     </p>
 
                     <div class="place-card-footer">
@@ -270,7 +270,7 @@ function renderPlaceCards(elementId, places) {
                         </span>
 
                         <span class="place-card-rating">
-                            ★ ${rating}
+                            <i class="bx bxs-star"></i> ${rating}
                             ${reviewCount ? `(${reviewCount})` : ""}
                         </span>
 
@@ -296,6 +296,22 @@ function formatEntryFee(entryFee) {
     }
 
     return `From ${value}`;
+}
+
+
+/* Pulls a rough numeric amount out of a free-text entryFee string
+   ("2,000 FCFA" -> 2000, "Free" or "" -> 0), so places can be sorted or
+   filtered by real price -- shared by home.js (budget-friendly picks)
+   and explore.js (the price-range slider). */
+function entryFeeValue(entryFee) {
+
+    if (!entryFee) return 0;
+
+    if (entryFee.toLowerCase().startsWith("free")) return 0;
+
+    const match = entryFee.replace(/,/g, "").match(/\d+/);
+
+    return match ? Number(match[0]) : 0;
 }
 
 

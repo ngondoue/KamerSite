@@ -14,25 +14,34 @@ const FEATURE_KEYWORDS = {
 };
 
 const CATEGORY_ICONS = {
-    restaurants: "🍴",
-    "cafés": "☕",
-    cafes: "☕",
-    nature: "🌳",
-    entertainment: "🎬",
-    shopping: "🛍️",
-    accommodation: "🏨"
+    restaurants: '<i class="bx bx-restaurant"></i>',
+    "cafés": '<i class="bx bx-coffee"></i>',
+    cafes: '<i class="bx bx-coffee"></i>',
+    nature: '<i class="bx bx-leaf"></i>',
+    entertainment: '<i class="bx bx-film"></i>',
+    shopping: '<i class="bx bx-shopping-bag"></i>',
+    accommodation: '<i class="bx bx-hotel"></i>'
 };
+
+// Upper bound for the price-range slider, in FCFA. Real entryFee values
+// seen so far top out well under this; if a place is ever priced higher,
+// it just pins to the top of the range instead of breaking anything.
+const PRICE_SLIDER_MAX = 10000;
+const PRICE_SLIDER_STEP = 500;
 
 let allCategories = [];
 let currentPlaces = [];
 let activeCategoryId = "";
 let currentPage = 1;
+let priceMin = 0;
+let priceMax = PRICE_SLIDER_MAX;
 
 
 document.addEventListener("DOMContentLoaded", async () => {
 
     setupExploreSearch();
     setupFilterControls();
+    setupPriceRangeSlider();
     setupSmartDiscovery();
 
     const params = new URLSearchParams(window.location.search);
@@ -124,7 +133,13 @@ function renderCategoryPills(initialCategorySlug) {
         ...allCategories.map((category) => ({
             id: category._id,
             label: category.name,
-            icon: category.icon || CATEGORY_ICONS[category.slug] || "📍"
+            // category.icon (if set in the DB) is stored as a bare Font
+            // Awesome class string, e.g. "bx bx-restaurant", so it
+            // needs wrapping in an <i> tag -- CATEGORY_ICONS values are
+            // already full tags.
+            icon: CATEGORY_ICONS[category.slug]
+                || (category.icon ? `<i class="${escapeHtml(category.icon)}"></i>` : "")
+                || '<i class="bx bxs-map-pin"></i>'
         }))
     ];
 
@@ -201,12 +216,17 @@ function setupFilterControls() {
 
         document.getElementById("explore-search-input").value = "";
         document.getElementById("filter-category").value = "";
-        document.getElementById("filter-price").value = "";
         document.getElementById("filter-location").value = "";
 
         document.querySelectorAll(".feature-checkbox").forEach((checkbox) => {
             checkbox.checked = false;
         });
+
+        priceMin = 0;
+        priceMax = PRICE_SLIDER_MAX;
+        document.getElementById("price-range-min").value = priceMin;
+        document.getElementById("price-range-max").value = priceMax;
+        updatePriceRangeDisplay();
 
         activeCategoryId = "";
         syncActivePill();
@@ -217,6 +237,86 @@ function setupFilterControls() {
 
     });
 
+}
+
+
+/* PRICE RANGE SLIDER
+   Two overlapping <input type="range"> elements, styled in explore.css
+   to look like one horizontal bar with two handles. Filtering happens
+   client-side against each place's real entryFee amount (parsed by the
+   shared entryFeeValue() helper in main.js) -- there's no fake "$/$$/$$$"
+   tier involved anywhere in this. */
+
+function setupPriceRangeSlider() {
+
+    const minInput = document.getElementById("price-range-min");
+    const maxInput = document.getElementById("price-range-max");
+
+    if (!minInput || !maxInput) return;
+
+    minInput.min = 0;
+    minInput.max = PRICE_SLIDER_MAX;
+    minInput.step = PRICE_SLIDER_STEP;
+    maxInput.min = 0;
+    maxInput.max = PRICE_SLIDER_MAX;
+    maxInput.step = PRICE_SLIDER_STEP;
+
+    minInput.value = priceMin;
+    maxInput.value = priceMax;
+
+    const onChange = () => {
+
+        priceMin = Number(minInput.value);
+        priceMax = Number(maxInput.value);
+
+        // Keep the two handles from crossing over each other.
+        if (priceMin > priceMax) {
+            [priceMin, priceMax] = [priceMax, priceMin];
+            minInput.value = priceMin;
+            maxInput.value = priceMax;
+        }
+
+        updatePriceRangeDisplay();
+
+    };
+
+    minInput.addEventListener("input", onChange);
+    maxInput.addEventListener("input", onChange);
+
+    updatePriceRangeDisplay();
+
+}
+
+
+function updatePriceRangeDisplay() {
+
+    const fill = document.getElementById("price-range-fill");
+    const minLabel = document.getElementById("price-range-min-label");
+    const maxLabel = document.getElementById("price-range-max-label");
+
+    const minPercent = (priceMin / PRICE_SLIDER_MAX) * 100;
+    const maxPercent = (priceMax / PRICE_SLIDER_MAX) * 100;
+
+    if (fill) {
+        fill.style.left = `${minPercent}%`;
+        fill.style.width = `${maxPercent - minPercent}%`;
+    }
+
+    if (minLabel) {
+        minLabel.textContent = formatFcfa(priceMin);
+    }
+
+    if (maxLabel) {
+        maxLabel.textContent = priceMax >= PRICE_SLIDER_MAX
+            ? `${formatFcfa(priceMax)}+`
+            : formatFcfa(priceMax);
+    }
+
+}
+
+
+function formatFcfa(amount) {
+    return `${amount.toLocaleString()} FCFA`;
 }
 
 
@@ -241,13 +341,14 @@ async function loadPlaces() {
     grid.innerHTML = `<div class="message">Loading places...</div>`;
 
     const search = document.getElementById("explore-search-input").value.trim();
-    const price = document.getElementById("filter-price").value;
 
     const query = new URLSearchParams();
 
     if (search) query.set("search", search);
     if (activeCategoryId) query.set("category", activeCategoryId);
-    if (price) query.set("price", price);
+    // Price is a free-text entryFee string ("2,000 FCFA"), not the old
+    // "$/$$/$$$" tier -- the backend can't filter on it, so the price
+    // range slider is applied client-side in applyClientFilters() below.
 
     try {
 
@@ -308,6 +409,16 @@ function applyClientFilters(places) {
     return places.filter((place) => {
 
         if (location && place.location !== location) {
+            return false;
+        }
+
+        // When the top handle is pushed all the way to the end of the
+        // slider, treat it as "no upper limit" rather than excluding
+        // anything priced above PRICE_SLIDER_MAX.
+        const amount = entryFeeValue(place.entryFee);
+        const effectiveMax = priceMax >= PRICE_SLIDER_MAX ? Infinity : priceMax;
+
+        if (amount < priceMin || amount > effectiveMax) {
             return false;
         }
 

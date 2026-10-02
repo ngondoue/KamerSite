@@ -67,11 +67,6 @@ function displayPlace(place) {
         place.entryFee || "Free";
 
     document.getElementById(
-        "place-price"
-    ).textContent =
-        formatPriceRange(place.priceRange);
-
-    document.getElementById(
         "place-rating"
     ).textContent =
         `${place.rating || 0} (${place.reviewCount || 0} reviews)`;
@@ -93,19 +88,6 @@ function displayPlace(place) {
 
     setupReviewForm(place._id);
 
-}
-
-
-function formatPriceRange(priceRange) {
-
-    const labels = {
-        "$": "Budget",
-        "$$": "Moderate",
-        "$$$": "Expensive",
-        "$$$$": "Premium"
-    };
-
-    return labels[priceRange] || "-";
 }
 
 
@@ -186,7 +168,9 @@ async function setupFavoriteButton(place) {
 
 function updateFavoriteButton(button, isFavorited) {
 
-    button.textContent = isFavorited ? "♥ Saved" : "♡ Save Place";
+    button.innerHTML = isFavorited
+        ? '<i class="bx bxs-heart"></i> Saved'
+        : '<i class="bx bx-heart"></i> Save Place';
     button.classList.toggle("active", isFavorited);
 
 }
@@ -240,7 +224,7 @@ function renderReviews(reviews) {
             <div class="review-card">
                 <div class="review-card-header">
                     <strong>${escapeHtml(authorName)}</strong>
-                    <span class="review-rating">${"★".repeat(review.rating || 0)}</span>
+                    <span class="review-rating">${'<i class="bx bxs-star"></i>'.repeat(review.rating || 0)}</span>
                 </div>
                 <p class="review-date">${escapeHtml(date)}</p>
                 <p class="review-comment">${escapeHtml(review.comment || "")}</p>

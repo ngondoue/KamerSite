@@ -43,6 +43,9 @@ const categorySchema = new mongoose.Schema(
 );
 
 
+// Mongoose 7+ dropped callback-style ("next") middleware -- a hook
+// either runs synchronously with no argument, or returns/awaits a
+// promise. Declaring a "next" parameter here would leave it undefined.
 categorySchema.pre("validate", function () {
     if (this.isModified("name") || !this.slug) {
         this.slug = slugify(this.name, {
