@@ -33,8 +33,6 @@ Allow users to share and view reviews
 
 Provide administrators with tools to manage platform content
 
-Demonstrate practical full-stack web development
-
 ✨ Features
 👤 Authentication & Profile
 
