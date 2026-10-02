@@ -1,21 +1,25 @@
 🌍 KamerSite
 Discover Places. Explore Cameroon.
 
-KamerSite is a web application for discovering and exploring interesting places in Cameroon, starting with Yaoundé.
+# KamerSite
 
-The platform provides users with an accessible way to discover local destinations, browse places by category, search and filter destinations, view detailed information, save favorites, and share reviews.
+A Cameroon-focused tourism and leisure discovery platform, built as a
+university software engineering project. KamerSite helps people discover
+tourism, leisure, natural, and recreational destinations in
+Cameroon starting with yaounde — with real, verified information and real reviews, not
+fabricated data.
 
-📌 About the Project
+## Problem being solved
 
-Finding information about local destinations in Cameroon can be difficult when information is spread across different platforms.
-
-KamerSite aims to provide a centralized platform where users can easily discover and explore places in Cameroon.
-
-The project is developed as a university software development project at ICT University.
+Information about destinations in Cameroon — locations, prices, hours,
+activities, reviews — is scattered and hard to find in one place.
+KamerSite brings it together in one searchable, admin-curated platform,
+so visitors can discover, filter, and evaluate real destinations before
+they go.
 
 🎯 Objectives
 
-Help users discover interesting places in Cameroon
+Help users discover interesting places in Cameroon effortlessly
 
 Organize destinations into categories
 
@@ -28,8 +32,6 @@ Allow users to save favorite destinations
 Allow users to share and view reviews
 
 Provide administrators with tools to manage platform content
-
-Demonstrate practical full-stack web development
 
 ✨ Features
 👤 Authentication & Profile
@@ -193,7 +195,6 @@ KamerSite/
 ├── backend/
 │   ├── config/
 │   ├── models/
-│   ├── routes/
 │   ├── controllers/
 │   ├── middleware/
 │   └── tests/
@@ -201,12 +202,10 @@ KamerSite/
 ├── docs/
 │   └── uml/
 │
-├── images/
-├── .env.example
 ├── .gitignore
 ├── package.json
 ├── README.md
-└── TEAM_STRUCTURE.md
+└── DEVELOPMENT_GUIDE.md
 
 
 The project structure may evolve as development progresses.
@@ -379,14 +378,14 @@ Responsive design
 
 👥 Team
 Member	Feature
-Ngondoue Beverly	Authentication + Profile
-CHEFOR SYLVANUS	Places + Search + Categories
-Nfor Markbride Godlove	Reviews + Favorites
-WIRSIY DAVY LEMNYUY	Administration
+-Ngondoue Beverly	Authentication + Profile
+-CHEFOR SYLVANUS	Places + Search + Categories
+-Nfor Markbride Godlove	Reviews + Favorites
+-WIRSIY DAVY LEMNYUY	Administration
 
 All team members contribute to frontend, backend, database, testing, UML, documentation, GitHub, integration, and presentation.
 
-For detailed responsibilities, see TEAM_STRUCTURE.md.
+For detailed responsibilities, see DEVELOPMENT_GUIDE.md.
 
 📐 UML Documentation
 
@@ -406,85 +405,7 @@ Submit Review Sequence Diagram
 
 Admin Moderation Sequence Diagram
 
-🗺️ Development Roadmap
-Phase 1 — Foundation
-
- Project setup
-
- Backend configuration
-
- MongoDB connection
-
- Environment configuration
-
- Base frontend
-
-Phase 2 — Core Features
-
- Authentication
-
- User profile
-
- Places
-
- Categories
-
- Search
-
- Filtering
-
-Phase 3 — User Interaction
-
- Favorites
-
- Reviews
-
- Profile integration
-
-Phase 4 — Administration
-
- Admin authentication
-
- Admin dashboard
-
- Place management
-
- Category management
-
- Review moderation
-
- User management
-
-Phase 5 — Testing & Quality
-
- Unit testing
-
- API testing
-
- Integration testing
-
- Security testing
-
- Responsive testing
-
- Regression testing
-
- Bug fixing
-
-Phase 6 — Finalization
-
- UML completion
-
- Documentation
-
- Deployment
-
- Final report
-
- Presentation
-
-🔮 Future Improvements
-
+Future Improvements.
 Possible future improvements include:
 
 Expansion to other cities and regions of Cameroon
@@ -534,16 +455,6 @@ Software documentation
 📄 License
 
 This project is developed for academic and educational purposes.
-
-👨‍💻 Contributors
-
-Ngondoue Beverly
-
-CHEFOR SYLVANUS
-
-Nfor Markbride Godlove
-
-WIRSIY DAVY LEMNYUY
 
 🌍 KamerSite
 Explore more. Discover locally.
