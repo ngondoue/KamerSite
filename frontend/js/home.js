@@ -94,17 +94,5 @@ async function loadBudgetPicks() {
 }
 
 
-/* Pulls a rough numeric value out of a free-text entryFee string so
-   places can be sorted cheapest-first. "Free" (or anything without a
-   number) sorts first as 0. */
-function entryFeeValue(entryFee) {
-
-    if (!entryFee) return 0;
-
-    if (entryFee.toLowerCase().startsWith("free")) return 0;
-
-    const match = entryFee.replace(/,/g, "").match(/\d+/);
-
-    return match ? Number(match[0]) : 0;
-
-}
+// entryFeeValue() now lives in main.js (loaded before this file on every
+// page) so the explore page's price-range filter can share it too.

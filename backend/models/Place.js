@@ -131,7 +131,9 @@ const placeSchema = new mongoose.Schema(
 );
 
 
-// Create slug from place name
+// Create slug from place name.
+// Mongoose 7+ dropped callback-style ("next") middleware -- an async
+// hook just awaits normally and returns, with no "next" argument.
 placeSchema.pre("validate", async function () {
     if (this.isModified("name") || !this.slug) {
         const baseSlug = slugify(this.name, {
@@ -154,7 +156,6 @@ placeSchema.pre("validate", async function () {
 
         this.slug = slug;
     }
-
 });
 
 

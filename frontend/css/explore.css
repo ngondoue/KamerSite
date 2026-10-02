@@ -231,3 +231,86 @@
     }
 
 }
+
+
+/* PRICE RANGE SLIDER
+   Two native <input type="range"> elements stacked on top of each
+   other, both transparent except for their thumbs, sitting over a
+   shared track. A separate "fill" div (positioned by explore.js, in
+   percent) highlights the selected range between the two handles. */
+
+.price-range-slider {
+    position: relative;
+    height: 28px;
+    margin: 6px 0 10px;
+}
+
+.price-range-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--green-100);
+    border-radius: 999px;
+    transform: translateY(-50%);
+}
+
+.price-range-track-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--green-600);
+    border-radius: 999px;
+}
+
+.price-range-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: none;
+}
+
+.price-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-700);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    margin-top: -1px;
+}
+
+.price-range-input::-moz-range-thumb {
+    pointer-events: auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-700);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.price-range-input::-webkit-slider-runnable-track,
+.price-range-input::-moz-range-track {
+    background: transparent;
+    border: none;
+}
+
+.price-range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-soft);
+}
