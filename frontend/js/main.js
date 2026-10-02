@@ -93,7 +93,7 @@ function loadHeader() {
             <div class="container navbar">
 
                 <a href="index.html" class="brand">
-                    Yaoundé Gems
+                    📍 KamerSite
                 </a>
 
                 <nav class="nav-links" id="nav-links">
@@ -161,7 +161,7 @@ function loadFooter() {
             <div class="container footer-inner">
 
                 <div>
-                    <strong>Yaoundé Gems</strong>
+                    <strong>📍 KamerSite</strong>
 
                     <p>
                         Discover amazing places around Yaoundé.
@@ -218,20 +218,40 @@ function renderPlaceCards(elementId, places) {
         const image =
             place.images && place.images.length > 0
                 ? place.images[0]
-                : "https://via.placeholder.com/600x400?text=Yaounde+Gems";
+                : "https://via.placeholder.com/600x400?text=KamerSite";
 
         const category =
             place.category?.name || "Place";
+
+        const priceLabel = formatEntryFee(place.entryFee);
+
+        const rating = place.rating
+            ? Number(place.rating).toFixed(1)
+            : "New";
+
+        const reviewCount = place.reviewCount || 0;
 
         return `
             <a
                 href="place.html?id=${place._id}"
                 class="place-card">
 
-                <img
-                    src="${image}"
-                    alt="${escapeHtml(place.name)}"
-                    class="place-card-image">
+                <div class="place-card-image-wrap">
+
+                    <img
+                        src="${image}"
+                        alt="${escapeHtml(place.name)}"
+                        class="place-card-image">
+
+                    <span class="place-card-category-tag">
+                        ${escapeHtml(category)}
+                    </span>
+
+                    <span class="place-card-favorite" aria-hidden="true">
+                        ♡
+                    </span>
+
+                </div>
 
                 <div class="place-card-body">
 
@@ -240,16 +260,21 @@ function renderPlaceCards(elementId, places) {
                     </h3>
 
                     <p>
-                        ${escapeHtml(place.location)}
+                        📍 ${escapeHtml(place.location)}
                     </p>
 
-                    <div class="place-card-rating">
-                        ★ ${place.rating || 0}
+                    <div class="place-card-footer">
+
+                        <span class="place-card-price">
+                            ${escapeHtml(priceLabel)}
+                        </span>
+
+                        <span class="place-card-rating">
+                            ★ ${rating}
+                            ${reviewCount ? `(${reviewCount})` : ""}
+                        </span>
+
                     </div>
-
-                    <p>
-                        ${escapeHtml(category)}
-                    </p>
 
                 </div>
 
@@ -257,6 +282,20 @@ function renderPlaceCards(elementId, places) {
         `;
 
     }).join("");
+}
+
+
+/* Turns the free-text entryFee field ("2,000 FCFA", "Free", "") into a
+   short display label like "From 2,000 FCFA" or "Free". */
+function formatEntryFee(entryFee) {
+
+    const value = (entryFee || "").trim();
+
+    if (!value || value.toLowerCase().startsWith("free")) {
+        return "Free";
+    }
+
+    return `From ${value}`;
 }
 
 

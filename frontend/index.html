@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Yaoundé Gems | Discover Amazing Places</title>
+    <title>KamerSite | Discover Amazing Places</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/home.css">
@@ -21,61 +21,114 @@
 
             <div class="container hero-inner">
 
+                <span class="location-tag">
+                    📍 Yaoundé, Cameroon
+                </span>
+
                 <h1>
-                    Explore Yaoundé
+                    Discover places.
                     <br>
                     <span class="hero-highlight">
-                        Discover Amazing Places
+                        Create memories.
                     </span>
                 </h1>
 
                 <p class="hero-sub">
-                    Find restaurants, parks, zoos and leisure spots
-                    around Yaoundé — all in one place.
+                    Find exciting places around you and make every
+                    outing count.
                 </p>
 
                 <form
                     class="search-bar"
                     id="home-search-form">
 
+                    <span class="search-bar-icon">🔍</span>
+
                     <input
                         type="text"
                         id="home-search-input"
-                        placeholder="What are you looking for?"
+                        placeholder="Search for a place, category or activity..."
                     >
 
                     <button
                         type="submit"
-                        class="btn btn-primary">
+                        class="search-bar-btn"
+                        aria-label="Search">
 
-                        Search
+                        🔍
 
                     </button>
 
                 </form>
-
-                <div
-                    class="category-pills"
-                    id="hero-category-pills">
-                </div>
 
             </div>
 
         </section>
 
 
-        <!-- Popular Places -->
+        <!-- Mood categories -->
         <section class="section container">
 
             <div class="section-heading">
 
-                <h2>Popular Places</h2>
+                <h2>What are you in the mood for?</h2>
 
                 <a
                     href="explore.html"
                     class="view-all-link">
 
-                    View All
+                    View all categories →
+
+                </a>
+
+            </div>
+
+            <div class="mood-grid">
+
+                <a href="explore.html?search=restaurant" class="mood-card">
+                    <span class="mood-icon mood-icon-green">🍴</span>
+                    <h3>Eat &amp; Drink</h3>
+                    <p>Restaurants, cafés, local food...</p>
+                </a>
+
+                <a href="explore.html?search=cafe" class="mood-card">
+                    <span class="mood-icon mood-icon-blue">🎓</span>
+                    <h3>Study &amp; Work</h3>
+                    <p>Quiet places, Wi-Fi, co-working...</p>
+                </a>
+
+                <a href="explore.html?search=relax" class="mood-card">
+                    <span class="mood-icon mood-icon-pink">💕</span>
+                    <h3>Date &amp; Relax</h3>
+                    <p>Romantic spots, peaceful places...</p>
+                </a>
+
+                <a href="explore.html?search=entertainment" class="mood-card">
+                    <span class="mood-icon mood-icon-orange">🎉</span>
+                    <h3>Fun &amp; Adventure</h3>
+                    <p>Entertainment, sports, activities...</p>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- Featured Places -->
+        <section class="section container">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Featured Places</h2>
+                    <p class="section-subtext">Handpicked places you'll love</p>
+                </div>
+
+                <a
+                    href="explore.html"
+                    class="view-all-link">
+
+                    See all →
 
                 </a>
 
@@ -83,64 +136,73 @@
 
             <div
                 class="place-grid"
-                id="popular-places-grid">
+                id="featured-places-grid">
+
+                <div class="message">Loading places...</div>
+
             </div>
 
         </section>
 
 
-        <!-- Call to Action -->
+        <!-- Promo banner -->
         <section class="section container">
 
-            <div class="cta-banner">
+            <div class="promo-banner">
 
-                <div>
+                <img
+                    class="promo-banner-image"
+                    src="https://images.unsplash.com/photo-1580060839134-75a50fb3a2f4?w=900&q=80"
+                    alt="Yaoundé landmark">
 
-                    <h3>
-                        Ready to explore Yaoundé?
-                    </h3>
+                <div class="promo-banner-content">
+
+                    <p class="promo-kicker">✦ Explore Yaoundé</p>
 
                     <p>
-                        Discover the hidden gems our city has to offer.
+                        From tasty local dishes to breathtaking views,
+                        KamerSite helps you discover the best places in
+                        and around Yaoundé.
                     </p>
 
+                    <a href="explore.html" class="btn btn-primary">
+                        Explore all places →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Budget-friendly picks -->
+        <section class="section container">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Budget-friendly picks</h2>
+                    <p class="section-subtext">
+                        Great places, great vibes, affordable prices.
+                    </p>
                 </div>
 
                 <a
                     href="explore.html"
-                    class="btn btn-primary">
+                    class="view-all-link">
 
-                    Explore Places
+                    See all →
 
                 </a>
 
             </div>
 
-        </section>
+            <div
+                class="place-grid budget-grid"
+                id="budget-picks-grid">
 
-
-        <!-- About -->
-        <section
-            class="section container"
-            id="about">
-
-            <div class="section-heading">
-
-                <h2>About Yaoundé Gems</h2>
-
-            </div>
-
-            <div class="about-content">
-
-                <p>
-                    Yaoundé Gems helps people discover and explore
-                    interesting places around Yaoundé.
-                </p>
-
-                <p>
-                    Find restaurants, parks, zoos, leisure spots
-                    and other hidden gems in one place.
-                </p>
+                <div class="message">Loading places...</div>
 
             </div>
 

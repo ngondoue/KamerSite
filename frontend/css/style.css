@@ -54,6 +54,27 @@ select {
     --radius-pill: 999px;
 
     --shadow: 0 4px 15px rgba(18, 48, 31, 0.08);
+
+    /* Extended green scale + aliases used across admin/profile/place/auth/explore.
+       Added so every page shares one consistent palette instead of each
+       page css file referencing undefined custom properties. */
+    --green-900: #0F2A1C;
+    --green-800: #163A26;
+    --green-700: #1E4D33;
+    --green-600: #2C6B46;
+    --green-500: #3C8759;
+    --green-200: #CFE4D6;
+    --green-100: #E4EEDF;
+    --green-50: #EFF5EA;
+
+    --surface: #FFFFFF;
+
+    --radius-lg: 16px;
+    --radius-md: 12px;
+
+    --shadow-sm: 0 2px 10px rgba(18, 48, 31, 0.06);
+
+    --text-soft: #8B9A8F;
 }
 
 * {
@@ -322,10 +343,50 @@ ul {
     transform: translateY(-3px);
 }
 
+.place-card-image-wrap {
+    position: relative;
+}
+
 .place-card-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
+}
+
+.place-card-category-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    padding: 4px 10px;
+
+    background: rgba(18, 48, 31, 0.78);
+    color: white;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+
+    border-radius: var(--radius-pill);
+}
+
+.place-card-favorite {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+
+    font-size: 0.95rem;
 }
 
 .place-card-body {
@@ -341,10 +402,26 @@ ul {
     font-size: 0.9rem;
 }
 
+.place-card-footer {
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.place-card-price {
+    font-weight: 700;
+    color: var(--green-700);
+    font-size: 0.9rem;
+}
+
 .place-card-rating {
-    margin-top: 8px;
     color: var(--gold);
     font-weight: bold;
+    font-size: 0.9rem;
 }
 
 
