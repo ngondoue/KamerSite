@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import Place from "../models/Place.js";
 import Category from "../models/Category.js";
 import { protect, requireAdmin } from "../middleware/auth.js";
@@ -32,12 +33,11 @@ router.get("/", async (req, res) => {
 
 
         if (category) {
-            const categoryData = await Category.findOne({
-                $or: [
-                    { _id: category },
-                    { slug: category }
-                ]
-            });
+            const categoryQuery = mongoose.isValidObjectId(category)
+                ? { $or: [{ _id: category }, { slug: category }] }
+                : { slug: category };
+
+            const categoryData = await Category.findOne(categoryQuery);
 
             if (!categoryData) {
                 return res.json([]);
@@ -82,13 +82,16 @@ router.get("/", async (req, res) => {
 // get one place
 router.get("/:id", async (req, res) => {
     try {
-        const place = await Place.findOne({
-            $or: [
-                { _id: req.params.id },
-                { slug: req.params.id }
-            ],
-            status: "published"
-        }).populate("category", "name slug icon");
+        // Same CastError pitfall as the category filter above: req.params.id
+        // is either a real ObjectId or a slug ("mont-febe"), and comparing
+        // a non-ObjectId string against "_id" throws instead of just not
+        // matching, which would 500 every slug-based lookup.
+        const placeQuery = mongoose.isValidObjectId(req.params.id)
+            ? { $or: [{ _id: req.params.id }, { slug: req.params.id }], status: "published" }
+            : { slug: req.params.id, status: "published" };
+
+        const place = await Place.findOne(placeQuery)
+            .populate("category", "name slug icon");
 
 
         if (!place) {
