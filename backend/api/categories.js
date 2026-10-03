@@ -1,7 +1,18 @@
 import express from "express";
+import mongoose from "mongoose";
 import Category from "../models/Category.js";
 import Place from "../models/Place.js";
 import { protect, requireAdmin } from "../middleware/auth.js";
+
+// ":id" below can be a real ObjectId or a slug ("nature"). Comparing a
+// non-ObjectId string against "_id" throws a CastError instead of just
+// not matching, which would 500 every slug-based lookup -- so only
+// include the "_id" condition when it's actually a valid id.
+function idOrSlugQuery(value) {
+    return mongoose.isValidObjectId(value)
+        ? { $or: [{ _id: value }, { slug: value }] }
+        : { slug: value };
+}
 
 const router = express.Router();
 
@@ -26,12 +37,9 @@ router.get("/", async (req, res) => {
 // get one category
 router.get("/:id", async (req, res) => {
     try {
-        const category = await Category.findOne({
-            $or: [
-                { _id: req.params.id },
-                { slug: req.params.id }
-            ]
-        });
+        const category = await Category.findOne(
+            idOrSlugQuery(req.params.id)
+        );
 
         if (!category) {
             return res.status(404).json({
@@ -52,12 +60,9 @@ router.get("/:id", async (req, res) => {
 // get places in a category
 router.get("/:id/places", async (req, res) => {
     try {
-        const category = await Category.findOne({
-            $or: [
-                { _id: req.params.id },
-                { slug: req.params.id }
-            ]
-        });
+        const category = await Category.findOne(
+            idOrSlugQuery(req.params.id)
+        );
 
         if (!category) {
             return res.status(404).json({
