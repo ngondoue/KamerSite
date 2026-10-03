@@ -13,7 +13,19 @@ const __dirname = path.dirname(__filename);
 // first run (binary download), so give it more room than Jest's default.
 jest.setTimeout(30000);
 
-const TEST_PORT = process.env.TEST_PORT || 5099;
+// Jest runs each test FILE in its own worker process by default, and
+// every one of them imports this file and spawns its own server. A
+// single hardcoded port means only one worker's server actually binds
+// it -- every other file's HTTP requests then silently land on that one
+// "winning" server, which is backed by a different in-memory database
+// than the one that file seeded, causing spurious 401s and, once that
+// file's afterAll() kills its server, ECONNREFUSED/ECONNRESET in
+// whichever files are still running. JEST_WORKER_ID is set by Jest
+// itself and is unique per worker, so offsetting by it gives each test
+// file its own port.
+const TEST_PORT =
+    process.env.TEST_PORT ||
+    5099 + Number(process.env.JEST_WORKER_ID || 0);
 export const BASE_URL = `http://localhost:${TEST_PORT}`;
 // Also exposed as a global for convenience/back-compat with any test
 // file that reaches for it instead of importing BASE_URL directly.
